@@ -10,8 +10,8 @@
     <version>1.0</version>
 
     <modules>
-        <!-- infrastructure components
-        <module>microservice-blueprint-common</module> -->
+        <!-- infrastructure components-->
+        <module>microservice-easyerp-common</module>
         <!--<module>database-middleware</module>
         <module>api-gateway</module>-->
 
