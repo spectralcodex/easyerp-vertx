@@ -8,7 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <option name="codegen.output" value="$PROJECT_DIR$/vertx-easyerp-common/src/main" />
         <processor name="io.vertx.codegen.CodeGenProcessor" />
-        <module name="vertx-easyerp-common" />
+        <module name="microservice-easyerp-common" />
       </profile>
     </annotationProcessing>
   </component>
