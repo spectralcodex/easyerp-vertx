@@ -6,6 +6,7 @@
 
     <groupId>io.vertx.easyerp</groupId>
     <artifactId>vertx-easyerp-microservice</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
 
     <modules>
@@ -26,6 +27,7 @@
         <module>cache-infrastructure</module>
         <module>shopping-ui</module>
         <module>monitor-dashboard</module>-->
+        <module>vertx-easyerp-common</module>
     </modules>
 
     <properties>
