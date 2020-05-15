@@ -1,4 +1,4 @@
-# Vert.x Microservice EasyErp
+# Vert.x Microservice EasyErp 
 
 This blueprint works with Vert.x **3.9.0**.
 ## Content
@@ -19,6 +19,7 @@ This blueprint works with Vert.x **3.9.0**.
 - Monitoring
 
 ## Documentation
+soon...
 
 References
 [![Travis Build Status](https://travis-ci.org/sczyh30/vertx-blueprint-microservice.svg?branch=master)](https://travis-ci.org/sczyh30/vertx-blueprint-microservice)

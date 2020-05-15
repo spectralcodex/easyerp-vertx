@@ -27,7 +27,7 @@
         <module>cache-infrastructure</module>
         <module>shopping-ui</module>
         <module>monitor-dashboard</module>-->
-        <module>vertx-easyerp-common</module>
+
     </modules>
 
     <properties>

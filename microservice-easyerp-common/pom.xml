@@ -9,6 +9,24 @@
         <version>1.0</version>
     </parent>
     <artifactId>vertx-easyerp-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-auth-oauth2</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-jdbc-client</artifactId>
+            <optional>true</optional>
+        </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.conn.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>
