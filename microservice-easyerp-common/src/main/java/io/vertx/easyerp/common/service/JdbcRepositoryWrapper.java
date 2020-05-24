@@ -33,7 +33,7 @@ public class JdbcRepositoryWrapper {
             connection.updateWithParams(sql, params, r -> {
                 if (r.succeeded()) {
                     resultHandler.handle(Future.succeededFuture());
-                } else {
+                } else {//hello malcador
                     resultHandler.handle(Future.failedFuture(r.cause()));
                 }
                 connection.close();
@@ -41,6 +41,13 @@ public class JdbcRepositoryWrapper {
         }));
     }
 
+    /**
+     * @param params
+     * @param sql
+     * @param ret
+     * @param resultHandler
+     * @param <R>
+     */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
 
     }
