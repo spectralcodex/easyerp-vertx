@@ -9,6 +9,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLConnection;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Helper and wrapper class for JDBC repository services ported from origional blueprint
  *
@@ -29,14 +32,14 @@ public class JdbcRepositoryWrapper {
      * @param resultHandler
      */
     protected void executeNoResult(JsonArray params, String sql, Handler<AsyncResult<Void>> resultHandler) {
-        client.getConnection(connHandler(resultHandler, connection -> {
-            connection.updateWithParams(sql, params, r -> {
+        client.getConnection(connHandler(resultHandler, con -> {
+            con.updateWithParams(sql, params, r -> {
                 if (r.succeeded()) {
                     resultHandler.handle(Future.succeededFuture());
-                } else {//hello malcador
+                } else {
                     resultHandler.handle(Future.failedFuture(r.cause()));
                 }
-                connection.close();
+                con.close();
             });
         }));
     }
@@ -49,7 +52,52 @@ public class JdbcRepositoryWrapper {
      * @param <R>
      */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
+        client.getConnection(connHandler(resultHandler, con -> {
+            con.updateWithParams(sql, params, ar -> {
+                if (ar.succeeded()) {
+                    resultHandler.handle(Future.succeededFuture(ret));
+                } else {
+                    resultHandler.handle(Future.failedFuture(ar.cause()));
+                }
+                con.close();
+            });
+        }));
+    }
 
+    protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
+        return getConnection()
+                .compose(con -> {
+                    Future<Optional<JsonObject>> future = Future.future();
+                    con.queryWithParams(sql, new JsonArray().add(param), r -> {
+                        if (r.succeeded()) {
+                            List<JsonObject> resList = r.result().getRows();
+                            if (resList == null || resList.isEmpty()) {
+                                future.complete(Optional.empty());
+                            } else {
+                                future.complete(Optional.of(resList.get(0)));
+                            }
+                        } else {//hello
+                            future.fail(r.cause());
+                        }
+                        con.close();
+                    });
+                    return future;
+                });
+    }
+
+    protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
+        return getConnection().compose(con -> {
+            Future<List<JsonObject>> future = Future.future();
+            con.queryWithParams(sql, param, r -> {
+                if (r.succeeded()) {
+                    future.complete(r.result().getRows());
+                } else {
+                    future.fail(r.cause());
+                }
+                con.close();
+            });
+            return future;
+        });
     }
 
     /**
@@ -66,7 +114,12 @@ public class JdbcRepositoryWrapper {
                 h1.handle(Future.failedFuture(conn.cause()));
             }
         };
+    }
 
+    protected Future<SQLConnection> getConnection() {
+        Future<SQLConnection> future = Future.future();
+        client.getConnection(future.completer());
+        return future;
     }
 }
 
