@@ -32,16 +32,15 @@ public class JdbcRepositoryWrapper {
      * @param resultHandler
      */
     protected void executeNoResult(JsonArray params, String sql, Handler<AsyncResult<Void>> resultHandler) {
-        client.getConnection(connHandler(resultHandler, con -> {
-            con.updateWithParams(sql, params, r -> {
-                if (r.succeeded()) {
-                    resultHandler.handle(Future.succeededFuture());
-                } else {
-                    resultHandler.handle(Future.failedFuture(r.cause()));
-                }
-                con.close();
-            });
-        }));
+        client.getConnection(connHandler(resultHandler, con ->
+                con.updateWithParams(sql, params, r -> {
+                    if (r.succeeded()) {
+                        resultHandler.handle(Future.succeededFuture());
+                    } else {
+                        resultHandler.handle(Future.failedFuture(r.cause()));
+                    }
+                    con.close();
+                })));
     }
 
     /**
@@ -52,7 +51,7 @@ public class JdbcRepositoryWrapper {
      * @param <R>
      */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
-        client.getConnection(connHandler(resultHandler, con -> {
+        client.getConnection(connHandler(resultHandler, con ->
             con.updateWithParams(sql, params, ar -> {
                 if (ar.succeeded()) {
                     resultHandler.handle(Future.succeededFuture(ret));
@@ -60,10 +59,15 @@ public class JdbcRepositoryWrapper {
                     resultHandler.handle(Future.failedFuture(ar.cause()));
                 }
                 con.close();
-            });
-        }));
+        })));
     }
 
+    /**
+     * @param param
+     * @param sql
+     * @param <K>
+     * @return
+     */
     protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
         return getConnection()
                 .compose(con -> {
@@ -85,6 +89,11 @@ public class JdbcRepositoryWrapper {
                 });
     }
 
+    /**
+     * @param param
+     * @param sql
+     * @return
+     */
     protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
         return getConnection().compose(con -> {
             Future<List<JsonObject>> future = Future.future();
@@ -98,6 +107,62 @@ public class JdbcRepositoryWrapper {
             });
             return future;
         });
+    }
+
+    /**
+     * @param sql
+     * @return
+     */
+    protected Future<List<JsonObject>> retrieveAll(String sql) {
+        return getConnection().compose(con -> {
+            Future<List<JsonObject>> future = Future.future();
+            con.query(sql, r -> {
+                if (r.succeeded()) {
+                    future.complete(r.result().getRows());
+                } else {
+                    future.fail(r.cause());
+                }
+                con.close();
+            });
+            return future;
+        });
+    }
+
+    /**
+     * @param id
+     * @param sql
+     * @param resultHandler
+     * @param <K>
+     */
+    protected <K> void removeOne(K id, String sql, Handler<AsyncResult<Void>> resultHandler) {
+        client.getConnection(connHandler(resultHandler, con -> {
+            JsonArray params = new JsonArray().add(id);
+            con.updateWithParams(sql, params, r -> {
+                if(r.succeeded()){
+                    resultHandler.handle(Future.succeededFuture());
+                } else {
+                    resultHandler.handle(Future.failedFuture(r.cause()));
+                }
+                con.close();
+            });
+        }));
+    }
+
+    /**
+     * @param sql
+     * @param resultHandler
+     */
+    protected void removeAll(String sql, Handler<AsyncResult<Void>> resultHandler) {
+        client.getConnection(connHandler(resultHandler, connection -> {
+            connection.update(sql, r -> {
+                if (r.succeeded()) {
+                    resultHandler.handle(Future.succeededFuture());
+                } else {
+                    resultHandler.handle(Future.failedFuture(r.cause()));
+                }
+                connection.close();
+            });
+        }));
     }
 
     /**
@@ -118,6 +183,7 @@ public class JdbcRepositoryWrapper {
 
     protected Future<SQLConnection> getConnection() {
         Future<SQLConnection> future = Future.future();
+
         client.getConnection(future.completer());
         return future;
     }
