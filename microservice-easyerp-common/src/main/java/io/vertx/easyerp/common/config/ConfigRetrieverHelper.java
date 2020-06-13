@@ -6,7 +6,6 @@ import io.vertx.config.ConfigStoreOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.rx.java.RxHelper;
 import rx.Observable;
 import io.vertx.core.Vertx;
 
