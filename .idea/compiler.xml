@@ -7,7 +7,8 @@
         <sourceTestOutputDir name="src/test/generated" />
         <outputRelativeToContentRoot value="true" />
         <processor name="io.vertx.codegen.CodeGenProcessor" />
-        <module name="microservice-easyerp-common" />
+        <module name="administration-microservice" />
+        <module name="common-microservice" />
       </profile>
     </annotationProcessing>
   </component>

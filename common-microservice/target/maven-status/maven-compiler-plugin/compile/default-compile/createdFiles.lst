@@ -1,0 +1,6 @@
+io/vertx/easyerp/microservice/common/config/Log4jConfigurationServiceHandler.class
+io/vertx/easyerp/microservice/common/package-info.class
+io/vertx/easyerp/microservice/common/service/JdbcRepositoryWrapper.class
+io/vertx/easyerp/microservice/common/BaseMicroserviceVerticle.class
+io/vertx/easyerp/microservice/common/RestAPIVerticle.class
+io/vertx/easyerp/microservice/common/config/ConfigRetrieverHelper.class

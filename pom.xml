@@ -11,7 +11,8 @@
 
     <modules>
         <!-- infrastructure components-->
-        <module>microservice-easyerp-common</module>
+        <module>common-microservice</module>
+        <module>administration-microservice</module>
         <!--<module>database-middleware</module>
         <module>api-gateway</module>-->
 
@@ -36,6 +37,7 @@
         <log4j.version>2.8</log4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <!--overridden in each project packaged as a fat jar -->
         <main.verticle/>
     </properties>
@@ -189,7 +191,7 @@
                             </annotationProcessors>
                             <generatedSourcesDirectory>src/main/generated</generatedSourcesDirectory>
                             <compilerArgs>
-                                <arg>-codegen.output=${project.basedir}/src/main</arg>
+                                <arg>-Acodegen.output=${project.basedir}/src/main</arg>
                             </compilerArgs>
                         </configuration>
                     </execution>
@@ -201,7 +203,7 @@
                             </annotationProcessors>
                             <generatedTestSourcesDirectory>src/test/generated</generatedTestSourcesDirectory>
                             <compilerArgs>
-                                <arg>codegen.output=${project.basedir}/src/test</arg>
+                                <arg>-Acodegen.output=${project.basedir}/src/test</arg>
                             </compilerArgs>
                         </configuration>
                     </execution>

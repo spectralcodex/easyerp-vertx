@@ -1,0 +1,6 @@
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/package-info.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/config/Log4jConfigurationServiceHandler.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/config/ConfigRetrieverHelper.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/BaseMicroserviceVerticle.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/service/JdbcRepositoryWrapper.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/common-microservice/src/main/java/io/vertx/easyerp/microservice/common/RestAPIVerticle.java

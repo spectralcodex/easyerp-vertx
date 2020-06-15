@@ -1,0 +1,10 @@
+io/vertx/easyerp/microservice/administration/AdministrationServiceVertxEBProxy.class
+io/vertx/easyerp/microservice/administratio/rxjavan/AdministrationService.class
+io/vertx/easyerp/microservice/administration/module/user/User.class
+io/vertx/easyerp/microservice/administration/package-info.class
+vertx-easyerp-administration-js/administration_service-proxy.js
+vertx-easyerp-administration-js/administration_service.js
+io/vertx/easyerp/microservice/administration/AdministrationService.class
+io/vertx/easyerp/microservice/administration/module/user/UserConverter.class
+io/vertx/easyerp/microservice/administration/AdministrationVerticle.class
+io/vertx/easyerp/microservice/administration/AdministrationServiceVertxProxyHandler.class
