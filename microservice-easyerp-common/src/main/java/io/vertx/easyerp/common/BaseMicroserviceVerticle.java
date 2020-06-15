@@ -53,10 +53,10 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
     /**
      * Helper methods for adding resources to the discovery service
      *
-     * @param name
-     * @param host
-     * @param port
-     * @return
+     * @param name resource name
+     * @param host resource host
+     * @param port resource port
+     * @return async result
      */
     protected Future<Void> publishHttpEndpoint(String name, String host, int port) {
         Record record = HttpEndpoint.createRecord(name, host, port, "/",
@@ -108,8 +108,8 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
     }
 
     /**
-     * @param record
-     * @return
+     * @param record resource record
+     * @return Async result
      */
     protected Future<Void> publish(Record record) {
         if (discovery == null) {

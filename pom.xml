@@ -188,7 +188,7 @@
                             </annotationProcessors>
                             <generatedSourcesDirectory>src/main/generated</generatedSourcesDirectory>
                             <compilerArgs>
-                                <arg>-Acodegen.output=${project.basedir}/src/main</arg>
+                                <arg>-codegen.output=${project.basedir}/src/main</arg>
                             </compilerArgs>
                         </configuration>
                     </execution>
@@ -200,7 +200,7 @@
                             </annotationProcessors>
                             <generatedTestSourcesDirectory>src/test/generated</generatedTestSourcesDirectory>
                             <compilerArgs>
-                                <arg>-Acodegen.output=${project.basedir}/src/test</arg>
+                                <arg>codegen.output=${project.basedir}/src/test</arg>
                             </compilerArgs>
                         </configuration>
                     </execution>
