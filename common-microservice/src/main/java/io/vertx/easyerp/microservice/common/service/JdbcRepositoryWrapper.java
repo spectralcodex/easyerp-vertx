@@ -1,11 +1,10 @@
 package io.vertx.easyerp.microservice.common.service;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
-import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLConnection;
 
@@ -19,17 +18,17 @@ import java.util.Optional;
  */
 
 public class JdbcRepositoryWrapper {
-
+    private static final Logger logger = LoggerFactory.getLogger(JdbcRepositoryWrapper.class);
     protected final JDBCClient client;
 
     public JdbcRepositoryWrapper(Vertx vertx, JsonObject config) {
-        this.client = JDBCClient.createNonShared(vertx, config);
+        this.client = JDBCClient.create(vertx, config);
     }
 
     /**
-     * @param params
-     * @param sql
-     * @param resultHandler
+     * @param params JsonArray containing query parameters
+     * @param sql query
+     * @param resultHandler results
      */
     protected void executeNoResult(JsonArray params, String sql, Handler<AsyncResult<Void>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con ->
@@ -44,11 +43,11 @@ public class JdbcRepositoryWrapper {
     }
 
     /**
-     * @param params
-     * @param sql
-     * @param ret
-     * @param resultHandler
-     * @param <R>
+     * @param params JsonArray containing query parameters
+     * @param sql query
+     * @param ret result passed
+     * @param resultHandler handler
+     * @param <R> Unknown Object
      */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con ->
@@ -62,30 +61,26 @@ public class JdbcRepositoryWrapper {
         })));
     }
 
-    /**
-     * @param param
-     * @param sql
-     * @param <K>
-     * @return
-     */
+
     protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
         return getConnection()
                 .compose(con -> {
-                    Future<Optional<JsonObject>> future = Future.future();
+                    Promise<Optional<JsonObject>> promise = Promise.promise();
+
                     con.queryWithParams(sql, new JsonArray().add(param), r -> {
                         if (r.succeeded()) {
                             List<JsonObject> resList = r.result().getRows();
                             if (resList == null || resList.isEmpty()) {
-                                future.complete(Optional.empty());
+                                promise.complete(Optional.empty());
                             } else {
-                                future.complete(Optional.of(resList.get(0)));
+                                promise.complete(Optional.of(resList.get(0)));
                             }
                         } else {//hello
-                            future.fail(r.cause());
+                            promise.fail(r.cause());
                         }
                         con.close();
                     });
-                    return future;
+                    return promise.future();
                 });
     }
 
@@ -96,16 +91,16 @@ public class JdbcRepositoryWrapper {
      */
     protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
         return getConnection().compose(con -> {
-            Future<List<JsonObject>> future = Future.future();
+            Promise<List<JsonObject>> promise = Promise.promise();
             con.queryWithParams(sql, param, r -> {
                 if (r.succeeded()) {
-                    future.complete(r.result().getRows());
+                    promise.complete(r.result().getRows());
                 } else {
-                    future.fail(r.cause());
+                    promise.fail(r.cause());
                 }
                 con.close();
             });
-            return future;
+            return promise.future();
         });
     }
 
@@ -115,16 +110,16 @@ public class JdbcRepositoryWrapper {
      */
     protected Future<List<JsonObject>> retrieveAll(String sql) {
         return getConnection().compose(con -> {
-            Future<List<JsonObject>> future = Future.future();
+            Promise<List<JsonObject>> promise = Promise.promise();
             con.query(sql, r -> {
                 if (r.succeeded()) {
-                    future.complete(r.result().getRows());
+                    promise.complete(r.result().getRows());
                 } else {
-                    future.fail(r.cause());
+                    promise.fail(r.cause());
                 }
                 con.close();
             });
-            return future;
+            return promise.future();
         });
     }
 
@@ -182,10 +177,17 @@ public class JdbcRepositoryWrapper {
     }
 
     protected Future<SQLConnection> getConnection() {
-        Future<SQLConnection> future = Future.future();
+        Promise<SQLConnection> promise = Promise.promise();
+        /*client.getConnection(ar ->{
+            if(ar.succeeded())
+                promise.complete(ar.result());
+            else
+                logger.error("Database connection failed, cause is "+ar.cause());
+                promise.fail(ar.cause());
+        });*/
 
-        client.getConnection(future.completer());
-        return future;
+        client.getConnection(promise); //equivalent initial
+        return promise.future();
     }
 }
 

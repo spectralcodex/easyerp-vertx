@@ -3,6 +3,8 @@ package io.vertx.easyerp.microservice.common;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
+import io.vertx.core.http.CookieSameSite;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
@@ -10,7 +12,6 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.sstore.ClusteredSessionStore;
@@ -33,11 +34,11 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @return async result
      */
     protected Future<Void> createHttpServer(Router router, String host, int port) {
-        Future<HttpServer> httpServerFuture = Future.future();
+        Promise<HttpServer> httpServerPromise = Promise.promise();
         vertx.createHttpServer()
-                .requestHandler(router::accept)
-                .listen(port, host, httpServerFuture.completer());
-        return httpServerFuture.map(r -> null);
+                .requestHandler(router)
+                .listen(port, host, httpServerPromise);
+        return httpServerPromise.future().map(r -> null);
     }
 
     /**
@@ -70,9 +71,11 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @param router router instance
      */
     protected void enableLocalSession(Router router) {
-        router.route().handler(CookieHandler.create());
+        //router.route().handler(CookieHandler.create()); deprecated
         router.route().handler(SessionHandler.create(
-                LocalSessionStore.create(vertx, "erp.user.session")));
+                LocalSessionStore.create(vertx, "erp.user.session"))
+                .setCookieSameSite(CookieSameSite.STRICT)
+                .setCookieSecureFlag(true));
     }
 
     /**
@@ -81,15 +84,17 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @param router Clustered session store
      */
     protected void enableClusteredSession(Router router) {
-        router.route().handler(CookieHandler.create());
-        router.route().handler(SessionHandler.create(ClusteredSessionStore.create(vertx)));
+        //router.route().handler(CookieHandler.create()); deprecated
+        router.route().handler(SessionHandler.create(ClusteredSessionStore.create(vertx))
+                .setCookieSameSite(CookieSameSite.STRICT)
+                .setCookieSecureFlag(true));
     }
 
     /**
      * Used to validate user login process
      *
      * @param context    routing context from rest
-     * @param biConsumer
+     * @param biConsumer be able to get both results together
      */
     protected void requireLogin(RoutingContext context, BiConsumer<RoutingContext, JsonObject> biConsumer) {
         Optional<JsonObject> principal = Optional.ofNullable(context.request().getHeader("user-principal"))
@@ -147,9 +152,9 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         };
     }
 
-    protected <T> Handler<AsyncResult<T>> resultHandlerNonEmpty(RoutingContext context, Function<T, String> converter){
+    protected <T> Handler<AsyncResult<T>> resultHandlerNonEmpty(RoutingContext context, Function<T, String> converter) {
         return ar -> {
-            if(ar.succeeded()){
+            if (ar.succeeded()) {
                 T res = ar.result();
                 if (res == null) {
                     notFound(context);
@@ -167,9 +172,9 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         };
     }
 
-    protected <T> Handler<AsyncResult<T>> resultHandlerNonEmpty(RoutingContext context){
+    protected <T> Handler<AsyncResult<T>> resultHandlerNonEmpty(RoutingContext context) {
         return ar -> {
-            if(ar.succeeded()){
+            if (ar.succeeded()) {
                 T res = ar.result();
                 if (res == null) {
                     notFound(context);
