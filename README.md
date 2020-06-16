@@ -1,6 +1,6 @@
 # Vert.x Microservice EasyErp 
 
-This blueprint works with Vert.x **3.9.0**.
+This Build is using with Vert.x **3.9.1**.
 ## Content
 
 - Microservice with Vert.x
