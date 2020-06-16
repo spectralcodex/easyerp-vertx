@@ -5,8 +5,10 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.jdbc.JDBCClient;
+import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +21,29 @@ import java.util.Optional;
 
 public class JdbcRepositoryWrapper {
     private static final Logger logger = LoggerFactory.getLogger(JdbcRepositoryWrapper.class);
-    protected final JDBCClient client;
+    protected final SQLClient client;
+
+    //Using Postgres connection pooling
+    /*protected final PgPool client;
+    protected final PgConnectOptions connectOptions;
+    protected final PoolOptions poolOptions;
+
+
+
+    /*public JdbcRepositoryWrapper(Vertx vertx, JsonObject config) {
+        connectOptions = new PgConnectOptions().setPort(5432)
+                .setHost(config.getString("PGHOST", "the-host"))
+                .setDatabase(config.getString("PGDATABASE", "the-db"))
+                .setUser(config.getString("PGUSER", "user"))
+                .setPassword(config.getString("PGPASSWORD", "secret"));
+
+        poolOptions = new PoolOptions().setMaxSize(config.getInteger("PGMAXSIZE", 5));
+
+        this.client = PgPool.pool(vertx, connectOptions, poolOptions);
+    }*/
 
     public JdbcRepositoryWrapper(Vertx vertx, JsonObject config) {
-        this.client = JDBCClient.create(vertx, config);
+        this.client = PostgreSQLClient.createNonShared(vertx, config);
     }
 
     /**
@@ -32,7 +53,7 @@ public class JdbcRepositoryWrapper {
      */
     protected void executeNoResult(JsonArray params, String sql, Handler<AsyncResult<Void>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con ->
-                con.updateWithParams(sql, params, r -> {
+                con.callWithParams(sql, params, null, r -> { //if returns then fix return json array
                     if (r.succeeded()) {
                         resultHandler.handle(Future.succeededFuture());
                     } else {
@@ -51,7 +72,7 @@ public class JdbcRepositoryWrapper {
      */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con ->
-            con.updateWithParams(sql, params, ar -> {
+            con.callWithParams(sql, params, null,  ar -> {
                 if (ar.succeeded()) {
                     resultHandler.handle(Future.succeededFuture(ret));
                 } else {
@@ -67,7 +88,7 @@ public class JdbcRepositoryWrapper {
                 .compose(con -> {
                     Promise<Optional<JsonObject>> promise = Promise.promise();
 
-                    con.queryWithParams(sql, new JsonArray().add(param), r -> {
+                    con.callWithParams(sql, new JsonArray().add(param),null, r -> {
                         if (r.succeeded()) {
                             List<JsonObject> resList = r.result().getRows();
                             if (resList == null || resList.isEmpty()) {
@@ -85,14 +106,14 @@ public class JdbcRepositoryWrapper {
     }
 
     /**
-     * @param param
-     * @param sql
-     * @return
+     * @param param Json array param
+     * @param sql callable statement of pgsql function
+     * @return a list of json objects
      */
     protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
         return getConnection().compose(con -> {
             Promise<List<JsonObject>> promise = Promise.promise();
-            con.queryWithParams(sql, param, r -> {
+            con.callWithParams(sql, param, null, r -> { //if call returns then must fix
                 if (r.succeeded()) {
                     promise.complete(r.result().getRows());
                 } else {
@@ -111,7 +132,7 @@ public class JdbcRepositoryWrapper {
     protected Future<List<JsonObject>> retrieveAll(String sql) {
         return getConnection().compose(con -> {
             Promise<List<JsonObject>> promise = Promise.promise();
-            con.query(sql, r -> {
+            con.call(sql, r -> {
                 if (r.succeeded()) {
                     promise.complete(r.result().getRows());
                 } else {
@@ -132,7 +153,7 @@ public class JdbcRepositoryWrapper {
     protected <K> void removeOne(K id, String sql, Handler<AsyncResult<Void>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con -> {
             JsonArray params = new JsonArray().add(id);
-            con.updateWithParams(sql, params, r -> {
+            con.callWithParams(sql, params, null, r -> {
                 if(r.succeeded()){
                     resultHandler.handle(Future.succeededFuture());
                 } else {
@@ -149,7 +170,7 @@ public class JdbcRepositoryWrapper {
      */
     protected void removeAll(String sql, Handler<AsyncResult<Void>> resultHandler) {
         client.getConnection(connHandler(resultHandler, connection -> {
-            connection.update(sql, r -> {
+            connection.call(sql, r -> {
                 if (r.succeeded()) {
                     resultHandler.handle(Future.succeededFuture());
                 } else {
@@ -176,7 +197,8 @@ public class JdbcRepositoryWrapper {
         };
     }
 
-    protected Future<SQLConnection> getConnection() {
+
+ protected Future<SQLConnection> getConnection() {
         Promise<SQLConnection> promise = Promise.promise();
         /*client.getConnection(ar ->{
             if(ar.succeeded())
@@ -189,5 +211,6 @@ public class JdbcRepositoryWrapper {
         client.getConnection(promise); //equivalent initial
         return promise.future();
     }
+
 }
 

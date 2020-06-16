@@ -1,6 +1,6 @@
 # Vert.x Microservice EasyErp 
 
-This Build is using with Vert.x **3.9.1**.
+This Build is using Vert.x **3.9.1**.
 ## Content
 
 - Microservice with Vert.x

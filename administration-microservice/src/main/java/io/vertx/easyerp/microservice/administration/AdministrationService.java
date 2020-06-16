@@ -46,8 +46,8 @@ public interface AdministrationService {
      * Add a product to the persistence.
      *
      * @param user       a product entity that we want to add
-     * @param resultHandler the result handler will be called as soon as the product has been added. The async result indicates
-     *                      whether the operation was successful or not.
+     * @param resultHandler the result handler will be called as soon as the product has been added. The async result
+     *                      indicates whether the operation was successful or not.
      */
     @Fluent
     AdministrationService addUser(User user, Handler<AsyncResult<User>> resultHandler);

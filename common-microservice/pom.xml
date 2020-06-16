@@ -20,13 +20,28 @@
             <artifactId>vertx-jdbc-client</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-sql-common</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-mysql-postgresql-client</artifactId>
+        </dependency>
+
+
+        <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.conn.version}</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-pg-client</artifactId>
+            <scope>provided</scope>
+        </dependency>-->
     </dependencies>
 
 </project>
