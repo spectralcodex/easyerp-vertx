@@ -1,0 +1,12 @@
+{
+  "api.name": "administration",
+  "product.http.address": "administration-microservice",
+  "product.http.port": 8082,
+  "host" : "localhost",
+  "port" : "5432",
+  "maxPoolSize" : "30",
+  "username" : "postgres",
+  "password" : "secr3t",
+  "database" : "easyerp",
+  "charset" : "UTF8"
+}

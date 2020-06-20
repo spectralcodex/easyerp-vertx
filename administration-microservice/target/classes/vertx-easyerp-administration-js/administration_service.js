@@ -20,7 +20,7 @@ var utils = require('vertx-js/util/utils');
 var io = Packages.io;
 var JsonObject = io.vertx.core.json.JsonObject;
 var JAdministrationService = Java.type('io.vertx.easyerp.microservice.administration.AdministrationService');
-var User = Java.type('io.vertx.easyerp.microservice.administration.module.user.User');
+var User = Java.type('io.vertx.easyerp.microservice.administration.jpojo.User');
 
 /**
  A service interface managing products.
@@ -35,24 +35,30 @@ var AdministrationService = function(j_val) {
   var j_administrationService = j_val;
   var that = this;
 
+  var __super_initializePersistence = this.initializePersistence;
+  var __super_addUser = this.addUser;
+  var __super_retrieveUser = this.retrieveUser;
   /**
 
    @public
    @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The async result indicates whether the operation was successful or not. 
    @return {AdministrationService}
    */
-  this.initializePersistence = function(resultHandler) {
+  this.initializePersistence =  function(resultHandler) {
     var __args = arguments;
     if (__args.length === 1 && typeof __args[0] === 'function') {
       j_administrationService["initializePersistence(io.vertx.core.Handler)"](function(ar) {
-      if (ar.succeeded()) {
-        resultHandler(null, null);
-      } else {
-        resultHandler(null, ar.cause());
-      }
-    });
+        if (ar.succeeded()) {
+          __args[0](null, null);
+        } else {
+          __args[0](null, ar.cause());
+        }
+      }) ;
       return that;
-    } else throw new TypeError('function invoked with invalid arguments');
+    } else if (typeof __super_initializePersistence != 'undefined') {
+      return __super_initializePersistence.apply(this, __args);
+    }
+    else throw new TypeError('function invoked with invalid arguments');
   };
 
   /**
@@ -63,18 +69,21 @@ var AdministrationService = function(j_val) {
    @param resultHandler {function} the result handler will be called as soon as the product has been added. The async result indicates whether the operation was successful or not. 
    @return {AdministrationService}
    */
-  this.addUser = function(user, resultHandler) {
+  this.addUser =  function(user, resultHandler) {
     var __args = arguments;
     if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
-      j_administrationService["addUser(io.vertx.easyerp.microservice.administration.module.user.User,io.vertx.core.Handler)"](user != null ? new User(new JsonObject(Java.asJSONCompatible(user))) : null, function(ar) {
-      if (ar.succeeded()) {
-        resultHandler(utils.convReturnDataObject(ar.result()), null);
-      } else {
-        resultHandler(null, ar.cause());
-      }
-    });
+      j_administrationService["addUser(io.vertx.easyerp.microservice.administration.jpojo.User,io.vertx.core.Handler)"](__args[0]  != null ? new User(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
+        if (ar.succeeded()) {
+          __args[1](utils.convReturnDataObject(ar.result()), null);
+        } else {
+          __args[1](null, ar.cause());
+        }
+      }) ;
       return that;
-    } else throw new TypeError('function invoked with invalid arguments');
+    } else if (typeof __super_addUser != 'undefined') {
+      return __super_addUser.apply(this, __args);
+    }
+    else throw new TypeError('function invoked with invalid arguments');
   };
 
   /**
@@ -84,18 +93,21 @@ var AdministrationService = function(j_val) {
    @param resultHandler {function} 
    @return {AdministrationService}
    */
-  this.retrieveUser = function(userId, resultHandler) {
+  this.retrieveUser =  function(userId, resultHandler) {
     var __args = arguments;
     if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
-      j_administrationService["retrieveUser(java.lang.String,io.vertx.core.Handler)"](userId, function(ar) {
-      if (ar.succeeded()) {
-        resultHandler(utils.convReturnDataObject(ar.result()), null);
-      } else {
-        resultHandler(null, ar.cause());
-      }
-    });
+      j_administrationService["retrieveUser(java.lang.String,io.vertx.core.Handler)"](__args[0], function(ar) {
+        if (ar.succeeded()) {
+          __args[1](utils.convReturnDataObject(ar.result()), null);
+        } else {
+          __args[1](null, ar.cause());
+        }
+      }) ;
       return that;
-    } else throw new TypeError('function invoked with invalid arguments');
+    } else if (typeof __super_retrieveUser != 'undefined') {
+      return __super_retrieveUser.apply(this, __args);
+    }
+    else throw new TypeError('function invoked with invalid arguments');
   };
 
   // A reference to the underlying Java delegate
@@ -105,11 +117,9 @@ var AdministrationService = function(j_val) {
 };
 
 AdministrationService._jclass = utils.getJavaClass("io.vertx.easyerp.microservice.administration.AdministrationService");
-AdministrationService._jtype = {
-  accept: function(obj) {
+AdministrationService._jtype = {accept: function(obj) {
     return AdministrationService._jclass.isInstance(obj._jdel);
-  },
-  wrap: function(jdel) {
+  },wrap: function(jdel) {
     var obj = Object.create(AdministrationService.prototype, {});
     AdministrationService.apply(obj, arguments);
     return obj;
@@ -118,9 +128,10 @@ AdministrationService._jtype = {
     return obj._jdel;
   }
 };
-AdministrationService._create = function(jdel) {
-  var obj = Object.create(AdministrationService.prototype, {});
+AdministrationService._create = function(jdel) {var obj = Object.create(AdministrationService.prototype, {});
   AdministrationService.apply(obj, arguments);
   return obj;
 }
+AdministrationService.SERVICE_NAME = JAdministrationService.SERVICE_NAME;
+AdministrationService.SERVICE_ADDRESS = JAdministrationService.SERVICE_ADDRESS;
 module.exports = AdministrationService;

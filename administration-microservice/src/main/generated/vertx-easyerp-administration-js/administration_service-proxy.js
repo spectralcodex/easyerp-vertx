@@ -14,6 +14,8 @@
  * under the License.
  */
 
+/// <reference path="./administration_service-proxy.d.ts" />
+
 /** @module vertx-easyerp-administration-js/administration_service */
 !function (factory) {
   if (typeof require === 'function' && typeof module !== 'undefined') {
@@ -28,15 +30,14 @@
 }(function () {
 
   /**
- A service interface managing products.
- <p>
- This service is an event bus service (aka. service proxy)
- </p>
+   A service interface managing products.
+   <p>
+   This service is an event bus service (aka. service proxy)
+   </p>
 
- @class
+   @class
   */
   var AdministrationService = function(eb, address) {
-
     var j_eb = eb;
     var j_address = address;
     var closed = false;
@@ -55,13 +56,13 @@
      @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The async result indicates whether the operation was successful or not. 
      @return {AdministrationService}
      */
-    this.initializePersistence = function(resultHandler) {
+    this.initializePersistence =  function(resultHandler) {
       var __args = arguments;
       if (__args.length === 1 && typeof __args[0] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {}, {"action":"initializePersistence"}, function(err, result) { __args[0](err, result &&result.body); });
+        j_eb.send(j_address, {}, {"action":"initializePersistence"}, function(err, result) { __args[0](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -74,13 +75,13 @@
      @param resultHandler {function} the result handler will be called as soon as the product has been added. The async result indicates whether the operation was successful or not. 
      @return {AdministrationService}
      */
-    this.addUser = function(user, resultHandler) {
+    this.addUser =  function(user, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"user":__args[0]}, {"action":"addUser"}, function(err, result) { __args[1](err, result &&result.body); });
+        j_eb.send(j_address, {"user":__args[0]}, {"action":"addUser"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -92,13 +93,13 @@
      @param resultHandler {function} 
      @return {AdministrationService}
      */
-    this.retrieveUser = function(userId, resultHandler) {
+    this.retrieveUser =  function(userId, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"userId":__args[0]}, {"action":"retrieveUser"}, function(err, result) { __args[1](err, result &&result.body); });
+        j_eb.send(j_address, {"userId":__args[0]}, {"action":"retrieveUser"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
