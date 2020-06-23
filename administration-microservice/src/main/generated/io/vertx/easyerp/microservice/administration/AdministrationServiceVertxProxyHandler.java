@@ -121,17 +121,7 @@ public class AdministrationServiceVertxProxyHandler extends ProxyHandler {
         }
         case "addUser": {
           service.addUser(json.getJsonObject("user") == null ? null : new io.vertx.easyerp.microservice.administration.jpojo.User(json.getJsonObject("user")),
-                        res -> {
-                        if (res.failed()) {
-                          if (res.cause() instanceof ServiceException) {
-                            msg.reply(res.cause());
-                          } else {
-                            msg.reply(new ServiceException(-1, res.cause().getMessage()));
-                          }
-                        } else {
-                          msg.reply(res.result() == null ? null : res.result().toJson());
-                        }
-                     });
+                        HelperUtils.createHandler(msg));
           break;
         }
         case "retrieveUser": {

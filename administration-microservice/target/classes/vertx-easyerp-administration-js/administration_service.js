@@ -74,7 +74,7 @@ var AdministrationService = function(j_val) {
     if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
       j_administrationService["addUser(io.vertx.easyerp.microservice.administration.jpojo.User,io.vertx.core.Handler)"](__args[0]  != null ? new User(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
         if (ar.succeeded()) {
-          __args[1](utils.convReturnDataObject(ar.result()), null);
+          __args[1](null, null);
         } else {
           __args[1](null, ar.cause());
         }

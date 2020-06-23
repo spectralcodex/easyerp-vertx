@@ -56,7 +56,7 @@ public interface AdministrationService {
      *                      indicates whether the operation was successful or not.
      */
     @Fluent
-    AdministrationService addUser(User user, Handler<AsyncResult<User>> resultHandler);
+    AdministrationService addUser(User user, Handler<AsyncResult<Void>> resultHandler);
 
     @Fluent
     AdministrationService retrieveUser(String userId, Handler<AsyncResult<User>> resultHandler);

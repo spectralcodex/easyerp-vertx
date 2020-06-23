@@ -85,10 +85,10 @@ public class JdbcRepositoryWrapper {
 
     protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
         return getConnection()
-                .compose(con -> {
+                .compose(pgCon -> {
                     Promise<Optional<JsonObject>> promise = Promise.promise();
 
-                    con.callWithParams(sql, new JsonArray().add(param),null, r -> {
+                    pgCon.callWithParams(sql, new JsonArray().add(param),null, r -> {
                         if (r.succeeded()) {
                             List<JsonObject> resList = r.result().getRows();
                             if (resList == null || resList.isEmpty()) {
@@ -99,7 +99,7 @@ public class JdbcRepositoryWrapper {
                         } else {//hello
                             promise.fail(r.cause());
                         }
-                        con.close();
+                        pgCon.close();
                     });
                     return promise.future();
                 });
@@ -111,15 +111,15 @@ public class JdbcRepositoryWrapper {
      * @return a list of json objects
      */
     protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
-        return getConnection().compose(con -> {
+        return getConnection().compose(pgCon -> {
             Promise<List<JsonObject>> promise = Promise.promise();
-            con.callWithParams(sql, param, null, r -> { //if call returns then must fix
+            pgCon.callWithParams(sql, param, null, r -> { //if call returns then must fix
                 if (r.succeeded()) {
                     promise.complete(r.result().getRows());
                 } else {
                     promise.fail(r.cause());
                 }
-                con.close();
+                pgCon.close();
             });
             return promise.future();
         });
@@ -130,15 +130,15 @@ public class JdbcRepositoryWrapper {
      * @return
      */
     protected Future<List<JsonObject>> retrieveAll(String sql) {
-        return getConnection().compose(con -> {
+        return getConnection().compose(pgCon -> {
             Promise<List<JsonObject>> promise = Promise.promise();
-            con.call(sql, r -> {
+            pgCon.call(sql, r -> {
                 if (r.succeeded()) {
                     promise.complete(r.result().getRows());
                 } else {
                     promise.fail(r.cause());
                 }
-                con.close();
+                pgCon.close();
             });
             return promise.future();
         });
@@ -151,15 +151,15 @@ public class JdbcRepositoryWrapper {
      * @param <K>
      */
     protected <K> void removeOne(K id, String sql, Handler<AsyncResult<Void>> resultHandler) {
-        client.getConnection(connHandler(resultHandler, con -> {
+        client.getConnection(connHandler(resultHandler, pgCon -> {
             JsonArray params = new JsonArray().add(id);
-            con.callWithParams(sql, params, null, r -> {
+            pgCon.callWithParams(sql, params, null, r -> {
                 if(r.succeeded()){
                     resultHandler.handle(Future.succeededFuture());
                 } else {
                     resultHandler.handle(Future.failedFuture(r.cause()));
                 }
-                con.close();
+                pgCon.close();
             });
         }));
     }
@@ -169,14 +169,14 @@ public class JdbcRepositoryWrapper {
      * @param resultHandler
      */
     protected void removeAll(String sql, Handler<AsyncResult<Void>> resultHandler) {
-        client.getConnection(connHandler(resultHandler, connection -> {
-            connection.call(sql, r -> {
+        client.getConnection(connHandler(resultHandler, pgCon -> {
+            pgCon.call(sql, r -> {
                 if (r.succeeded()) {
                     resultHandler.handle(Future.succeededFuture());
                 } else {
                     resultHandler.handle(Future.failedFuture(r.cause()));
                 }
-                connection.close();
+                pgCon.close();
             });
         }));
     }
@@ -187,12 +187,12 @@ public class JdbcRepositoryWrapper {
      * @return generated handler
      */
     protected <R> Handler<AsyncResult<SQLConnection>> connHandler(Handler<AsyncResult<R>> h1, Handler<SQLConnection> h2) {
-        return conn -> {
-            if (conn.succeeded()) {
-                final SQLConnection connection = conn.result();
+        return pgCon -> {
+            if (pgCon.succeeded()) {
+                final SQLConnection connection = pgCon.result();
                 h2.handle(connection);
             } else {
-                h1.handle(Future.failedFuture(conn.cause()));
+                h1.handle(Future.failedFuture(pgCon.cause()));
             }
         };
     }
@@ -211,6 +211,8 @@ public class JdbcRepositoryWrapper {
         client.getConnection(promise); //equivalent initial
         return promise.future();
     }
+
+
 
 }
 
