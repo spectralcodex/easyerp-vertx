@@ -1,7 +1,6 @@
 package io.vertx.easyerp.microservice.administration.impl;
 
 import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
@@ -11,6 +10,8 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.easyerp.microservice.administration.AdministrationService;
 import io.vertx.easyerp.microservice.administration.jpojo.User;
 import io.vertx.easyerp.microservice.common.service.JdbcRepositoryWrapper;
+
+import java.util.UUID;
 
 
 public class AdministrationImpl extends JdbcRepositoryWrapper implements AdministrationService {
@@ -23,12 +24,13 @@ public class AdministrationImpl extends JdbcRepositoryWrapper implements Adminis
 
     @Override
     public AdministrationService initializePersistence(Handler<AsyncResult<Void>> handler) {
-        client.getConnection(connHandler(handler, pgConn -> {
-            logger.info("Initializing persistence....!!");
-            pgConn.execute("SELECT CURRENT_TIMESTAMP", handler);
-        }));
+        final String uuid = UUID.randomUUID().toString();
+        logger.info("Initializing service..Administration->" + uuid);
+        this.retrieveNone(uuid, "{ call time_stamp() }")
+                .onComplete(handler);
         return this;
     }
+
 
     @Override
     public AdministrationService addUser(User user, Handler<AsyncResult<Void>> resultHandler) {
@@ -42,12 +44,14 @@ public class AdministrationImpl extends JdbcRepositoryWrapper implements Adminis
         return this;
     }
 
+
     @Override
     public AdministrationService retrieveUser(String userId, Handler<AsyncResult<User>> resultHandler) {
         String func = "{ call get_user(?) }";
         this.retrieveOne(userId, func)
                 .map(option -> option.map(User::new).orElse(null))
                 .onComplete(resultHandler);
+
         return this;
     }
 }

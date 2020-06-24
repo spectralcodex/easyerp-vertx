@@ -13,7 +13,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
 public class RestAdministrationAPIVerticle extends RestAPIVerticle {
-    public static final String SERVICE_NAME = "product-rest-api";
+    public static final String SERVICE_NAME = "administration-rest-api";
 
     private static final String API_ADD_USER = "/add";
     private static final String API_RETRIEVE_USER_BY_ID = "/user";
@@ -36,7 +36,7 @@ public class RestAdministrationAPIVerticle extends RestAPIVerticle {
         final Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
 
-        router.post(API_ADD_USER).handler(this::apiApiAddUser);
+        router.post(API_ADD_USER).handler(this::apiAddUser);
         router.post(API_RETRIEVE_USER).handler(this::apiRetrieveUser);
 
         String host = config().getString("user.http.address", "0.0.0.0");
@@ -44,10 +44,10 @@ public class RestAdministrationAPIVerticle extends RestAPIVerticle {
 
         createHttpServer(router, host, port)
                 .compose(serverCreated -> publishHttpEndpoint(SERVICE_NAME, host, port))
-                .setHandler(startPromise);
+                .onComplete(startPromise);
     }
 
-    private void apiApiAddUser(RoutingContext context) {
+    private void apiAddUser(RoutingContext context) {
         try {
             User user = new User(new JsonObject(context.getBodyAsString()));
             service.addUser(user, resultHandler(context, r -> {

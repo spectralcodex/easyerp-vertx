@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.Optional;
 
 /**
- * A service interface managing products.
+ * A service interface managing Users.
  * <p>
  * This service is an event bus service (aka. service proxy)
  * </p>
@@ -49,10 +49,10 @@ public interface AdministrationService {
 
 
     /**
-     * Add a product to the persistence.
+     * Add a User to the persistence.
      *
-     * @param user       a product entity that we want to add
-     * @param resultHandler the result handler will be called as soon as the product has been added. The async result
+     * @param user       a  User entity that we want to add
+     * @param resultHandler the result handler will be called as soon as the User has been added. The async result
      *                      indicates whether the operation was successful or not.
      */
     @Fluent

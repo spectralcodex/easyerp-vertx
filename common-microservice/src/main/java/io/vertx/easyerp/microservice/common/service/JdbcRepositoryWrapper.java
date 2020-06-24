@@ -105,6 +105,24 @@ public class JdbcRepositoryWrapper {
                 });
     }
 
+    protected <T> Future<Void> retrieveNone(T t, String sql){
+        return getConnection()
+                .compose(pgCon -> {
+                    Promise<JsonObject> promise = Promise.promise();
+                    pgCon.call(sql, ar ->{
+                        if(ar.succeeded()){
+                            JsonObject res = ar.result().getRows().get(0).put("id", t);
+                            logger.info(res);
+                            promise.complete(res);
+                        }else {
+                            promise.fail(ar.cause());
+                        }
+                        pgCon.close();
+                    });
+                    return promise.future().map(r -> null);
+                });
+    }
+
     /**
      * @param param Json array param
      * @param sql callable statement of pgsql function
