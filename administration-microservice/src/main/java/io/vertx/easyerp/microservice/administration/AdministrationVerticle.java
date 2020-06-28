@@ -14,7 +14,7 @@ import io.vertx.serviceproxy.ProxyHelper;
 
 public class AdministrationVerticle extends BaseMicroserviceVerticle {
     private static final long SCAN_PERIOD = 20000L;
-    private static  final String PATH = "/conf/vertx.conf";
+    private static  final String PATH = "conf/local.conf";
     private final static Logger logger = LoggerFactory.getLogger(AdministrationVerticle.class);
 
     @Override
