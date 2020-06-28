@@ -5,14 +5,7 @@ import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
-import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
-import io.vertx.easyerp.microservice.administration.impl.AdministrationImpl;
 import io.vertx.easyerp.microservice.administration.jpojo.User;
-
-import java.sql.ResultSet;
-import java.util.Optional;
 
 /**
  * A service interface managing Users.

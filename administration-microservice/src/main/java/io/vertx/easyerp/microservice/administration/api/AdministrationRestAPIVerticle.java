@@ -1,7 +1,6 @@
 package io.vertx.easyerp.microservice.administration.api;
 
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
+
 import io.vertx.core.Promise;
 import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.JsonObject;
@@ -12,9 +11,8 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-public class RestAdministrationAPIVerticle extends RestAPIVerticle {
+public class AdministrationRestAPIVerticle extends RestAPIVerticle {
     public static final String SERVICE_NAME = "administration-rest-api";
-
     private static final String API_ADD_USER = "/add";
     private static final String API_RETRIEVE_USER_BY_ID = "/user";
     private static final String API_RETRIEVE_ALL_USER = "/users";
@@ -25,7 +23,7 @@ public class RestAdministrationAPIVerticle extends RestAPIVerticle {
 
     private final AdministrationService service;
 
-    public RestAdministrationAPIVerticle(AdministrationService service) {
+    public AdministrationRestAPIVerticle(AdministrationService service) {
         this.service = service;
     }
 
@@ -67,6 +65,4 @@ public class RestAdministrationAPIVerticle extends RestAPIVerticle {
         String userId = context.request().getParam("userId");
         service.retrieveUser(userId, resultHandlerNonEmpty(context));
     }
-
-
 }
