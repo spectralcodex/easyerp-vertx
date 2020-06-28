@@ -3,6 +3,8 @@ package io.vertx.easyerp.microservice.common.config;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
+import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -19,10 +21,30 @@ public enum ConfigRetrieverHelper {
     private ConfigRetrieverOptions options = new ConfigRetrieverOptions();
     private ConfigRetriever configRetriever;
 
-
     public ConfigRetrieverHelper usingScanPeriod(final long scanPeriod) {
         options.setScanPeriod(scanPeriod);
         return this;
+    }
+
+    public Future<JsonObject> createConfig(Vertx vertx) {
+        logger.info("Config file loading...");
+        configRetriever = ConfigRetriever.create(vertx, options);
+
+        Promise<JsonObject> configPromise = Promise.promise();
+        configRetriever.getConfig(config -> {
+            if (config.failed()) {
+                logger.info("Failed to retrieve configuration");
+                configPromise.fail(config.cause());
+            } else {
+
+                configPromise.complete(config.result());
+                logger.info(config.result());
+            }
+        });
+
+        configRetriever.listen(config -> configPromise.complete(config.getNewConfiguration()));
+
+        return configPromise.future();
     }
 
     public Observable<JsonObject> rxCreateConfig(final Vertx vertx) {

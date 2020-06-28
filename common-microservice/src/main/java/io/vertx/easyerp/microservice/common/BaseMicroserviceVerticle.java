@@ -88,6 +88,10 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
         return publish(record);
     }
 
+    protected <T> Future<T> publishEventBusService(String name, String address,  final T serviceClass) {
+        Record record = EventBusService.createRecord(name, address, serviceClass.getClass());
+        return publish(record).map(r -> serviceClass);
+    }
 
     /**
      * A helper method that simply publish logs on the event bus.
