@@ -218,15 +218,17 @@ public class JdbcRepositoryWrapper {
 
  protected Future<SQLConnection> getConnection() {
         Promise<SQLConnection> promise = Promise.promise();
-        /*client.getConnection(ar ->{
-            if(ar.succeeded())
+      /*  this.client.getConnection(ar ->{
+            if(ar.succeeded()) {
+                logger.info("Conn:::::::::::connestion succeed!!!!!!!!!");
                 promise.complete(ar.result());
-            else
+            }
+            else{
                 logger.error("Database connection failed, cause is "+ar.cause());
-                promise.fail(ar.cause());
-        });*/
-
-        client.getConnection(promise); //equivalent initial
+                promise.fail(ar.cause());}
+        });
+*/
+        this.client.getConnection(promise); //equivalent initial
         return promise.future();
     }
 

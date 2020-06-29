@@ -23,7 +23,7 @@ var JAdministrationService = Java.type('io.vertx.easyerp.microservice.administra
 var User = Java.type('io.vertx.easyerp.microservice.administration.jpojo.User');
 
 /**
- A service interface managing products.
+ A service interface managing Users.
  <p>
  This service is an event bus service (aka. service proxy)
  </p>
@@ -62,11 +62,11 @@ var AdministrationService = function(j_val) {
   };
 
   /**
-   Add a product to the persistence.
+   Add a User to the persistence.
 
    @public
-   @param user {Object} a product entity that we want to add 
-   @param resultHandler {function} the result handler will be called as soon as the product has been added. The async result indicates whether the operation was successful or not. 
+   @param user {Object} a User entity that we want to add 
+   @param resultHandler {function} the result handler will be called as soon as the User has been added. The async result indicates whether the operation was successful or not. 
    @return {AdministrationService}
    */
   this.addUser =  function(user, resultHandler) {

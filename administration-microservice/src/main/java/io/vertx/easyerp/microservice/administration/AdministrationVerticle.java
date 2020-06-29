@@ -9,12 +9,17 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.easyerp.microservice.administration.api.AdministrationRestAPIVerticle;
 import io.vertx.easyerp.microservice.administration.impl.AdministrationImpl;
 import io.vertx.easyerp.microservice.common.BaseMicroserviceVerticle;
+
 import static io.vertx.easyerp.microservice.common.config.ConfigRetrieverHelper.configurationRetriever;
+
 import io.vertx.serviceproxy.ProxyHelper;
+
+import java.io.InputStream;
 
 public class AdministrationVerticle extends BaseMicroserviceVerticle {
     private static final long SCAN_PERIOD = 20000L;
-    private static  final String PATH = "conf/local.conf";
+    private final static InputStream CONFIG_IN = AdministrationVerticle.class.getClassLoader().getResourceAsStream("config.json");
+   // private static final String PATH = " /administration-microservice/conf/config.json ";
     private final static Logger logger = LoggerFactory.getLogger(AdministrationVerticle.class);
 
     @Override
@@ -22,13 +27,14 @@ public class AdministrationVerticle extends BaseMicroserviceVerticle {
         super.start();
 
         //Smuggling the service instance
-       loadConfigsAndRegisterService(PATH)
-               /* ping database and-then publish the service in the discovery infrastructure
-                */
-               .compose(loadOk -> pingPersistence(loadOk))
-               .compose(databaseOK -> publishEventBusService(AdministrationService.SERVICE_NAME, AdministrationService.SERVICE_ADDRESS, databaseOK))
-               .compose(servicePublisedOk -> deployRestService(servicePublisedOk))
-               .onComplete(startPromise);
+        loadConfigsAndRegisterService()
+                /*
+                 * Ping database and-then publish the service in the discovery infrastructure
+                 */
+                .compose(loadOk -> pingPersistence(loadOk))
+                .compose(databaseOK -> publishEventBusService(AdministrationService.SERVICE_NAME, AdministrationService.SERVICE_ADDRESS, databaseOK))
+                .compose(servicePublishedOk -> deployRestService(servicePublishedOk))
+                .onComplete(startPromise);
     }
 
     /**
@@ -37,10 +43,10 @@ public class AdministrationVerticle extends BaseMicroserviceVerticle {
      * @param service instance
      * @return service instance to be used in next stage
      */
-    private Future<AdministrationService> pingPersistence(final AdministrationService service){
+    private Future<AdministrationService> pingPersistence(final AdministrationService service) {
         Promise<Void> initPromise = Promise.promise();
         service.initializePersistence(initPromise);
-        return initPromise.future().map(r->{
+        return initPromise.future().map(r -> {
             ///Perform some init db operations here
             return service;
         });
@@ -53,7 +59,7 @@ public class AdministrationVerticle extends BaseMicroserviceVerticle {
      * @param service instance
      * @return
      */
-    private Future<Void> deployRestService(AdministrationService service){
+    private Future<Void> deployRestService(AdministrationService service) {
         Promise<String> promise = Promise.promise();
         vertx.deployVerticle(new AdministrationRestAPIVerticle(service),
                 new DeploymentOptions().setConfig(config()),
@@ -67,16 +73,15 @@ public class AdministrationVerticle extends BaseMicroserviceVerticle {
     /**
      * Load configurations, create and register the service for propagation
      *
-     * @param path configuration file path
-     * @return  service instance to be use in next stage
+     * @return service instance to be use in next stage
      */
-    private Future<AdministrationService> loadConfigsAndRegisterService(final String path) {
+    private Future<AdministrationService> loadConfigsAndRegisterService() throws Exception {
         Promise<JsonObject> initConfigPromise = Promise.promise();
 
         //get environmental variables using the path provided
         configurationRetriever
                 .usingScanPeriod(SCAN_PERIOD)
-                .withFileStore(path)
+                .withJsonStore(CONFIG_IN)
                 .createConfig(vertx)
                 .onComplete(initConfigPromise);
         return initConfigPromise.future().map(conf -> {

@@ -1,18 +1,22 @@
 package io.vertx.easyerp.microservice.common.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import rx.Observable;
-import io.vertx.core.Vertx;
 
+import java.io.InputStream;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
 
 public enum ConfigRetrieverHelper {
     configurationRetriever;
@@ -38,7 +42,7 @@ public enum ConfigRetrieverHelper {
             } else {
 
                 configPromise.complete(config.result());
-                logger.info(config.result());
+                //logger.info(config.result());
             }
         });
 
@@ -78,11 +82,13 @@ public enum ConfigRetrieverHelper {
         return configObservable.filter(Objects::nonNull);
     }
 
-    public ConfigRetrieverHelper withFileStore(String path) {
-        ConfigStoreOptions fileStore = new ConfigStoreOptions()
-                .setType("file")
-                .setConfig(new JsonObject().put("path", path));
-        options.addStore(fileStore);
+    public ConfigRetrieverHelper withJsonStore(final InputStream in) throws Exception {
+        final Map<?, ?> map = new ObjectMapper().readValue(in, Map.class);
+        logger.info("File found:::::" + map);
+        ConfigStoreOptions jsonStore = new ConfigStoreOptions()
+                .setType("json")
+                .setConfig(JsonObject.mapFrom(map));
+        options.addStore(jsonStore);
         return this;
     }
 }

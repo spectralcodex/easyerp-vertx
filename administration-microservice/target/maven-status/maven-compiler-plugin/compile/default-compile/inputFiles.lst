@@ -2,4 +2,5 @@
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/administration-microservice/src/main/java/io/vertx/easyerp/microservice/administration/jpojo/User.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/administration-microservice/src/main/java/io/vertx/easyerp/microservice/administration/package-info.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/administration-microservice/src/main/java/io/vertx/easyerp/microservice/administration/AdministrationService.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/administration-microservice/src/main/java/io/vertx/easyerp/microservice/administration/api/AdministrationRestAPIVerticle.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/administration-microservice/src/main/java/io/vertx/easyerp/microservice/administration/impl/AdministrationImpl.java
