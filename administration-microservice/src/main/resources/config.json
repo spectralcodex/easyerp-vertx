@@ -1,12 +1,14 @@
 {
   "api.name": "administration",
-  "product.http.address": "administration-microservice",
-  "product.http.port": 8082,
-  "host" : "localhost",
-  "port" : 5432,
-  "maxPoolSize" : 30,
-  "username" : "postgres",
-  "password" : "secr3t",
-  "database" : "easyerp",
-  "charset" : "UTF8"
+  "administration.http.address": "0.0.0.0",
+  "administration.http.port": 8082,
+  "port": 5432,
+  "maxPoolSize": 30,
+  "username": "postgres",
+  "host": "localhost",
+  "database": "impala",
+  "password": "secr3t",
+  "charset": "UTF8",
+  "driver_class": "org.postgresql.Driver",
+  "jooq.dialect": "POSTGRES"
 }

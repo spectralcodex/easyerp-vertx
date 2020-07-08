@@ -4,7 +4,10 @@ package io.vertx.easyerp.microservice.administration.api;
 import io.vertx.core.Promise;
 import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.easyerp.microservice.administration.AdministrationService;
+import io.vertx.easyerp.microservice.administration.impl.AdministrationImpl;
 import io.vertx.easyerp.microservice.administration.jpojo.User;
 import io.vertx.easyerp.microservice.common.RestAPIVerticle;
 import io.vertx.ext.web.Router;
@@ -20,6 +23,7 @@ public class AdministrationRestAPIVerticle extends RestAPIVerticle {
     private static final String API_UPDATE_USER = "/:userId";
     private static final String API_DELETE_USER = "/:userId";
     private static final String API_DELETE_ALL_USER = "/all";
+    protected final static Logger logger = LoggerFactory.getLogger(AdministrationRestAPIVerticle.class);
 
     private final AdministrationService service;
 
@@ -37,8 +41,8 @@ public class AdministrationRestAPIVerticle extends RestAPIVerticle {
         router.post(API_ADD_USER).handler(this::apiAddUser);
         router.post(API_RETRIEVE_USER).handler(this::apiRetrieveUser);
 
-        String host = config().getString("user.http.address", "0.0.0.0");
-        int port = config().getInteger("user.http.port", 8082);
+        String host = config().getString("administration.http.address", "0.0.0.0");
+        int port = config().getInteger("administration.http.port", 8082);
 
         createHttpServer(router, host, port)
                 .compose(serverCreated -> publishHttpEndpoint(SERVICE_NAME, host, port))
@@ -47,11 +51,12 @@ public class AdministrationRestAPIVerticle extends RestAPIVerticle {
 
     private void apiAddUser(RoutingContext context) {
         try {
-            User user = new User(new JsonObject(context.getBodyAsString()));
+            logger.info(context.getBodyAsJson());
+
+            User user = new User(context.getBodyAsJson());
             service.addUser(user, resultHandler(context, r -> {
-                String result = new JsonObject().put("message", "user_added")
-                        .put("userId", user.getId())
-                        .encodePrettily();
+                String result = new JsonObject()
+                        .put("message", "user_added").encodePrettily();
                 context.response().setStatusCode(201)
                         .putHeader("content-type", "application/json")
                         .end(result);

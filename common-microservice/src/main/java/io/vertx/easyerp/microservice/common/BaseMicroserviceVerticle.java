@@ -161,7 +161,7 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
             stopPromise.complete();
         } else {
             CompositeFuture.all(futures)
-                    .onComplete(ar -> {
+                    .setHandler(ar -> {
                         discovery.close();
                         if (ar.failed()) {
                             stopPromise.fail(ar.cause());

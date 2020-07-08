@@ -26,22 +26,21 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-mysql-postgresql-client</artifactId>
-        </dependency>
-
-
-        <!--<dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.conn.version}</version>
-            <optional>true</optional>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${pgsql.driver.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-pg-client</artifactId>
-            <scope>provided</scope>
-        </dependency>-->
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>3.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.jklingsporn</groupId>
+            <artifactId>vertx-jooq-classic-async</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -4,7 +4,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CookieSameSite;
+//import io.vertx.core.http.CookieSameSite;
+//import io.vertx.core.http.CookieSameSite;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
@@ -16,6 +17,7 @@ import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.rxjava.ext.web.handler.CookieHandler;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -71,10 +73,10 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @param router router instance
      */
     protected void enableLocalSession(Router router) {
-        //router.route().handler(CookieHandler.create()); deprecated
+        //router.route().handler(CookieHandler.create()); //deprecated
         router.route().handler(SessionHandler.create(
                 LocalSessionStore.create(vertx, "erp.user.session"))
-                .setCookieSameSite(CookieSameSite.STRICT)
+                //.setCookieSameSite(CookieSameSite.STRICT)
                 .setCookieSecureFlag(true));
     }
 
@@ -86,7 +88,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
     protected void enableClusteredSession(Router router) {
         //router.route().handler(CookieHandler.create()); deprecated
         router.route().handler(SessionHandler.create(ClusteredSessionStore.create(vertx))
-                .setCookieSameSite(CookieSameSite.STRICT)
+                //.setCookieSameSite(CookieSameSite.STRICT)
                 .setCookieSecureFlag(true));
     }
 

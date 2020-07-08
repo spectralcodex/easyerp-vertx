@@ -11,7 +11,12 @@ public class User {
     private Long Id;
     private String firstName;
     private String lastName;
-    private String age;
+    private String email;
+    private String mobile;
+    private String secret;
+    private String salt;
+    private String companyCode;
+    private String createdBy;
 
     public User(JsonObject json) {
         UserConverter.fromJson(json, this);
@@ -27,7 +32,12 @@ public class User {
         this.Id = other.Id;
         this.firstName = other.firstName;
         this.lastName = other.lastName;
-        this.age = other.age;
+        this.email = other.email;
+        this.mobile = other.mobile;
+        this.secret = other.secret;
+        this.salt = other.salt;
+        this.companyCode = other.companyCode;
+        this.createdBy = other.createdBy;
     }
 
     public Long getId() {
@@ -57,13 +67,64 @@ public class User {
         return this;
     }
 
-    public String getAge() {
-        return age;
+
+    public String getEmail() {
+        return email;
     }
 
-    public User setAge(String age) {
-        this.age = age;
+    public User setEmail(String email) {
+        this.email = email;
         return this;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public User setMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public User setSecret(String secret) {
+        this.secret = secret;
+        return this;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public User setSalt(String salt) {
+        this.salt = salt;
+        return this;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public User setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+        return this;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public User setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return this.toJson().encodePrettily();
     }
 
     @Override
@@ -74,16 +135,16 @@ public class User {
         return Objects.equals(Id, user.Id) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(age, user.age);
+                Objects.equals(email, user.email) &&
+                Objects.equals(mobile, user.mobile) &&
+                Objects.equals(secret, user.secret) &&
+                Objects.equals(salt, user.salt) &&
+                Objects.equals(companyCode, user.companyCode) &&
+                Objects.equals(createdBy, user.createdBy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, firstName, lastName, age);
-    }
-
-    @Override
-    public String toString() {
-        return this.toJson().encodePrettily();
+        return Objects.hash(Id, firstName, lastName, email, mobile, secret, salt, companyCode, createdBy);
     }
 }

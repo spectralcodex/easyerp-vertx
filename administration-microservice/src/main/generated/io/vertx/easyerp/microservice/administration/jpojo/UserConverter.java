@@ -14,9 +14,19 @@ public class UserConverter {
   public static void fromJson(Iterable<java.util.Map.Entry<String, Object>> json, User obj) {
     for (java.util.Map.Entry<String, Object> member : json) {
       switch (member.getKey()) {
-        case "age":
+        case "companyCode":
           if (member.getValue() instanceof String) {
-            obj.setAge((String)member.getValue());
+            obj.setCompanyCode((String)member.getValue());
+          }
+          break;
+        case "createdBy":
+          if (member.getValue() instanceof String) {
+            obj.setCreatedBy((String)member.getValue());
+          }
+          break;
+        case "email":
+          if (member.getValue() instanceof String) {
+            obj.setEmail((String)member.getValue());
           }
           break;
         case "firstName":
@@ -34,6 +44,21 @@ public class UserConverter {
             obj.setLastName((String)member.getValue());
           }
           break;
+        case "mobile":
+          if (member.getValue() instanceof String) {
+            obj.setMobile((String)member.getValue());
+          }
+          break;
+        case "salt":
+          if (member.getValue() instanceof String) {
+            obj.setSalt((String)member.getValue());
+          }
+          break;
+        case "secret":
+          if (member.getValue() instanceof String) {
+            obj.setSecret((String)member.getValue());
+          }
+          break;
       }
     }
   }
@@ -43,8 +68,14 @@ public class UserConverter {
   }
 
   public static void toJson(User obj, java.util.Map<String, Object> json) {
-    if (obj.getAge() != null) {
-      json.put("age", obj.getAge());
+    if (obj.getCompanyCode() != null) {
+      json.put("companyCode", obj.getCompanyCode());
+    }
+    if (obj.getCreatedBy() != null) {
+      json.put("createdBy", obj.getCreatedBy());
+    }
+    if (obj.getEmail() != null) {
+      json.put("email", obj.getEmail());
     }
     if (obj.getFirstName() != null) {
       json.put("firstName", obj.getFirstName());
@@ -54,6 +85,15 @@ public class UserConverter {
     }
     if (obj.getLastName() != null) {
       json.put("lastName", obj.getLastName());
+    }
+    if (obj.getMobile() != null) {
+      json.put("mobile", obj.getMobile());
+    }
+    if (obj.getSalt() != null) {
+      json.put("salt", obj.getSalt());
+    }
+    if (obj.getSecret() != null) {
+      json.put("secret", obj.getSecret());
     }
   }
 }

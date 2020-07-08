@@ -5,7 +5,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
 
@@ -43,12 +43,12 @@ public class JdbcRepositoryWrapper {
     }*/
 
     public JdbcRepositoryWrapper(Vertx vertx, JsonObject config) {
-        this.client = PostgreSQLClient.createNonShared(vertx, config);
+        this.client = JDBCClient.create(vertx, config);
     }
 
     /**
-     * @param params JsonArray containing query parameters
-     * @param sql query
+     * @param params        JsonArray containing query parameters
+     * @param sql           query
      * @param resultHandler results
      */
     protected void executeNoResult(JsonArray params, String sql, Handler<AsyncResult<Void>> resultHandler) {
@@ -64,32 +64,111 @@ public class JdbcRepositoryWrapper {
     }
 
     /**
-     * @param params JsonArray containing query parameters
-     * @param sql query
-     * @param ret result passed
+     * @param in            JsonArray containing in parameters
+     * @param out           JsonArray containing out parameters
+     * @param sql           query
      * @param resultHandler handler
-     * @param <R> Unknown Object
+     */
+    protected void executeNoResult(JsonArray in, JsonArray out, String sql, Handler<AsyncResult<Void>> resultHandler) {
+        client.getConnection(connHandler(resultHandler, con ->
+                con.callWithParams(sql, in, out, ar -> {
+                    if (ar.succeeded()) {
+                        String err_msg = ar.result().getOutput().getString(0);
+                        //logger.info("Result -->" + err_msg);
+                        switch (err_msg) {
+                            case "SUCCESS":
+                                resultHandler.handle(Future.succeededFuture());
+                                break;
+                            default:
+                                resultHandler.handle(Future.failedFuture(err_msg));
+                        }
+                    } else {
+                        resultHandler.handle(Future.failedFuture(ar.cause()));
+                    }
+                    con.close();
+                })));
+    }
+
+    /**
+     * @param params        JsonArray containing query parameters
+     * @param sql           query
+     * @param ret           result passed
+     * @param resultHandler handler
+     * @param <R>           Unknown Object
      */
     protected <R> void execute(JsonArray params, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
         client.getConnection(connHandler(resultHandler, con ->
-            con.callWithParams(sql, params, null,  ar -> {
-                if (ar.succeeded()) {
-                    resultHandler.handle(Future.succeededFuture(ret));
-                } else {
-                    resultHandler.handle(Future.failedFuture(ar.cause()));
-                }
-                con.close();
-        })));
+                con.callWithParams(sql, params, null, ar -> {
+                    if (ar.succeeded()) {
+                        resultHandler.handle(Future.succeededFuture(ret));
+                    } else {
+                        resultHandler.handle(Future.failedFuture(ar.cause()));
+                    }
+                    con.close();
+                })));
+    }
+
+    /**
+     * @param in            JsonArray containing in parameters
+     * @param out           JsonArray containing out parameters
+     * @param sql           query
+     * @param ret           result passed
+     * @param resultHandler handler
+     * @param <R>           Unknown Object
+     */
+    protected <R> void execute(JsonArray in, JsonArray out, String sql, R ret, Handler<AsyncResult<R>> resultHandler) {
+        client.getConnection(connHandler(resultHandler, con ->
+                con.callWithParams(sql, in, out, ar -> {
+                    if (ar.succeeded()) {
+                        JsonArray res = ar.result().getOutput();
+
+                        String err_msg = res.encode();
+                        logger.info("Result-->" + res);
+                        switch (err_msg) {
+                            case "success":
+                                resultHandler.handle(Future.succeededFuture(ret));
+                                break;
+                            default:
+                                resultHandler.handle(Future.failedFuture(err_msg));
+                        }
+
+                    } else {
+                        resultHandler.handle(Future.failedFuture(ar.cause()));
+                    }
+                    con.close();
+                })));
     }
 
 
-    protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
+    /*protected <K> Future<Optional<JsonObject>> retrieveOne(K param, String sql) {
         return getConnection()
                 .compose(pgCon -> {
                     Promise<Optional<JsonObject>> promise = Promise.promise();
 
-                    pgCon.callWithParams(sql, new JsonArray().add(param),null, r -> {
+                    pgCon.callWithParams(sql, new JsonArray().add(param), null, r -> {
                         if (r.succeeded()) {
+                            List<JsonObject> resList = r.result().getRows();
+                            if (resList == null || resList.isEmpty()) {
+                                promise.complete(Optional.empty());
+                            } else {
+                                promise.complete(Optional.of(resList.get(0)));
+                            }
+                        } else {//hello
+                            promise.fail(r.cause());
+                        }
+                        pgCon.close();
+                    });
+                    return promise.future();
+                });
+    }*/
+
+    protected <K> Future<Optional<JsonObject>> retrieveOne(JsonArray in, JsonArray out, String sql) {
+        return getConnection()
+                .compose(pgCon -> {
+                    Promise<Optional<JsonObject>> promise = Promise.promise();
+                    pgCon.callWithParams(sql, in , out, r -> {
+                        if (r.succeeded()) {
+                            logger.info("RESULT --> "+r.result().getOutput());
                             List<JsonObject> resList = r.result().getRows();
                             if (resList == null || resList.isEmpty()) {
                                 promise.complete(Optional.empty());
@@ -105,16 +184,15 @@ public class JdbcRepositoryWrapper {
                 });
     }
 
-    protected <T> Future<Void> retrieveNone(T t, String sql){
+    protected <T> Future<Void> retrieveNone(T t, String sql) {
         return getConnection()
                 .compose(pgCon -> {
                     Promise<JsonObject> promise = Promise.promise();
-                    pgCon.call(sql, ar ->{
-                        if(ar.succeeded()){
-                            JsonObject res = ar.result().getRows().get(0).put("id", t);
-                            logger.info(res);
-                            promise.complete(res);
-                        }else {
+                    pgCon.call(sql, ar -> {
+                        if (ar.succeeded()) {
+                            logger.info("persist OK  id --> " + t);
+                            promise.complete();
+                        } else {
                             promise.fail(ar.cause());
                         }
                         pgCon.close();
@@ -125,12 +203,13 @@ public class JdbcRepositoryWrapper {
 
     /**
      * @param param Json array param
-     * @param sql callable statement of pgsql function
+     * @param sql   callable statement of pgsql function
      * @return a list of json objects
      */
     protected Future<List<JsonObject>> retrieveMany(JsonArray param, String sql) {
         return getConnection().compose(pgCon -> {
             Promise<List<JsonObject>> promise = Promise.promise();
+            //new JsonArray().add(t), new JsonArray().add("VARCHAR")
             pgCon.callWithParams(sql, param, null, r -> { //if call returns then must fix
                 if (r.succeeded()) {
                     promise.complete(r.result().getRows());
@@ -172,7 +251,7 @@ public class JdbcRepositoryWrapper {
         client.getConnection(connHandler(resultHandler, pgCon -> {
             JsonArray params = new JsonArray().add(id);
             pgCon.callWithParams(sql, params, null, r -> {
-                if(r.succeeded()){
+                if (r.succeeded()) {
                     resultHandler.handle(Future.succeededFuture());
                 } else {
                     resultHandler.handle(Future.failedFuture(r.cause()));
@@ -216,22 +295,11 @@ public class JdbcRepositoryWrapper {
     }
 
 
- protected Future<SQLConnection> getConnection() {
+    protected Future<SQLConnection> getConnection() {
         Promise<SQLConnection> promise = Promise.promise();
-      /*  this.client.getConnection(ar ->{
-            if(ar.succeeded()) {
-                logger.info("Conn:::::::::::connestion succeed!!!!!!!!!");
-                promise.complete(ar.result());
-            }
-            else{
-                logger.error("Database connection failed, cause is "+ar.cause());
-                promise.fail(ar.cause());}
-        });
-*/
         this.client.getConnection(promise); //equivalent initial
         return promise.future();
     }
-
 
 
 }
