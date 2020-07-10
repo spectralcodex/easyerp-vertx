@@ -38,9 +38,10 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<TbUserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
+    public static final UniqueKey<TbUserRecord> TB_USER_PKEY = UniqueKeys0.TB_USER_PKEY;
     public static final UniqueKey<TbUserRecord> TB_USER_EMAIL_KEY = UniqueKeys0.TB_USER_EMAIL_KEY;
     public static final UniqueKey<TbUserRecord> TB_USER_MOBILE_KEY = UniqueKeys0.TB_USER_MOBILE_KEY;
+    public static final UniqueKey<TbUserRecord> TB_USER_COMPANYCODE_KEY = UniqueKeys0.TB_USER_COMPANYCODE_KEY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -56,8 +57,9 @@ public class Keys {
     }
 
     private static class UniqueKeys0 {
-        public static final UniqueKey<TbUserRecord> USER_PKEY = Internal.createUniqueKey(TbUser.TB_USER, "user_pkey", TbUser.TB_USER.ID);
+        public static final UniqueKey<TbUserRecord> TB_USER_PKEY = Internal.createUniqueKey(TbUser.TB_USER, "tb_user_pkey", TbUser.TB_USER.ID);
         public static final UniqueKey<TbUserRecord> TB_USER_EMAIL_KEY = Internal.createUniqueKey(TbUser.TB_USER, "tb_user_email_key", TbUser.TB_USER.EMAIL);
         public static final UniqueKey<TbUserRecord> TB_USER_MOBILE_KEY = Internal.createUniqueKey(TbUser.TB_USER, "tb_user_mobile_key", TbUser.TB_USER.MOBILE);
+        public static final UniqueKey<TbUserRecord> TB_USER_COMPANYCODE_KEY = Internal.createUniqueKey(TbUser.TB_USER, "tb_user_companyCode_key", TbUser.TB_USER.COMPANYCODE);
     }
 }

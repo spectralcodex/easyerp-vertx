@@ -279,7 +279,7 @@ public class JdbcRepositoryWrapper {
     }
 
     /**
-     * A helper methods that generates async handler for SQLConnection
+     * A helper methods that generates jooq.async handler for SQLConnection
      *
      * @return generated handler
      */

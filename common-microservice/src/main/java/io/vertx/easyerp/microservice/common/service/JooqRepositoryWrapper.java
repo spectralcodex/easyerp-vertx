@@ -6,14 +6,13 @@ import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.sql.SQLConnection;
-import jooq.async.AsyncClassicGenericQueryExecutor;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.sql.SQLConnection;
+import jooq.async.AsyncClassicGenericQueryExecutor;
+import jooq.async.AsyncClassicQueryExecutor;
 import org.jooq.Configuration;
-import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
 
 /**
@@ -24,7 +23,7 @@ import org.jooq.impl.DefaultConfiguration;
 
 public class JooqRepositoryWrapper {
     private static final Logger logger = LoggerFactory.getLogger(JooqRepositoryWrapper.class);
-    protected final AsyncClassicGenericQueryExecutor executor;
+    protected final  AsyncClassicGenericQueryExecutor executor;
     private final AsyncSQLClient nonShared;
     private final static Configuration DIALECT = new DefaultConfiguration().set(SQLDialect.POSTGRES);
 
@@ -33,6 +32,7 @@ public class JooqRepositoryWrapper {
     public JooqRepositoryWrapper(Vertx vertx, JsonObject config){
         this.nonShared = PostgreSQLClient.createNonShared(vertx, config);
         this.executor = new AsyncClassicGenericQueryExecutor(DIALECT, this.nonShared);
+
         //this.dsl = DSL.using(dialect);
     }
 

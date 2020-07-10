@@ -5,19 +5,21 @@ package jooq;
 
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 
 import javax.annotation.Generated;
 
 import jooq.routines.Decremental;
-import jooq.routines.GetNow;
+import jooq.routines.FnGetNow;
 import jooq.routines.HiLo;
 import jooq.routines.Incremental;
+import jooq.routines.ShowUsers;
 import jooq.routines.Square;
 import jooq.routines.SumAvg;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Result;
 
 
 /**
@@ -65,20 +67,20 @@ public class Routines {
     }
 
     /**
-     * Call <code>public.get_now</code>
+     * Call <code>public.fn_get_now</code>
      */
-    public static OffsetDateTime getNow(Configuration configuration) {
-        GetNow f = new GetNow();
+    public static String fnGetNow(Configuration configuration) {
+        FnGetNow f = new FnGetNow();
 
         f.execute(configuration);
         return f.getReturnValue();
     }
 
     /**
-     * Get <code>public.get_now</code> as a field.
+     * Get <code>public.fn_get_now</code> as a field.
      */
-    public static Field<OffsetDateTime> getNow() {
-        GetNow f = new GetNow();
+    public static Field<String> fnGetNow() {
+        FnGetNow f = new FnGetNow();
 
         return f.asField();
     }
@@ -123,6 +125,25 @@ public class Routines {
     public static Field<Integer> incremental(Field<Integer> val) {
         Incremental f = new Incremental();
         f.setVal(val);
+
+        return f.asField();
+    }
+
+    /**
+     * Call <code>public.show_users</code>
+     */
+    public static Result<Record> showUsers(Configuration configuration) {
+        ShowUsers f = new ShowUsers();
+
+        f.execute(configuration);
+        return f.getReturnValue();
+    }
+
+    /**
+     * Get <code>public.show_users</code> as a field.
+     */
+    public static Field<Result<Record>> showUsers() {
+        ShowUsers f = new ShowUsers();
 
         return f.asField();
     }

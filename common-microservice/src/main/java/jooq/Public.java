@@ -31,7 +31,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -1985830147;
+    private static final long serialVersionUID = -1967465272;
 
     /**
      * The reference instance of <code>public</code>
@@ -39,7 +39,7 @@ public class Public extends SchemaImpl {
     public static final Public PUBLIC = new Public();
 
     /**
-     * This table contains user login credentials and assigned user role
+     * The table <code>public.tb_user</code>.
      */
     public final TbUser TB_USER = TbUser.TB_USER;
 
@@ -68,7 +68,7 @@ public class Public extends SchemaImpl {
 
     private final List<Sequence<?>> getSequences0() {
         return Arrays.<Sequence<?>>asList(
-            Sequences.USER_ID_SEQ);
+            Sequences.TB_USER_ID_SEQ);
     }
 
     @Override

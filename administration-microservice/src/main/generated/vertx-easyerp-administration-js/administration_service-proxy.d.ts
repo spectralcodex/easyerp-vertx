@@ -31,5 +31,5 @@ export default class AdministrationService {
 
   addUser(user: any, resultHandler: (err: any, result: any) => any) : AdministrationService;
 
-  retrieveUser(userId: string, resultHandler: (err: any, result: any) => any) : AdministrationService;
+  retrieveUser(userId: string, resultHandler: (err: any, result: Object) => any) : AdministrationService;
 }

@@ -57,7 +57,7 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
      * @param name resource name
      * @param host resource host
      * @param port resource port
-     * @return async result
+     * @return jooq.async result
      */
     protected Future<Void> publishHttpEndpoint(String name, String host, int port) {
         Record record = HttpEndpoint.createRecord(name, host, port, "/",
@@ -161,7 +161,7 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
             stopPromise.complete();
         } else {
             CompositeFuture.all(futures)
-                    .setHandler(ar -> {
+                    .onComplete(ar -> {
                         discovery.close();
                         if (ar.failed()) {
                             stopPromise.fail(ar.cause());

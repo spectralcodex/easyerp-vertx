@@ -33,7 +33,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @param router microservice router
      * @param host   http host
      * @param port   http port
-     * @return async result
+     * @return jooq.async result
      */
     protected Future<Void> createHttpServer(Router router, String host, int port) {
         Promise<HttpServer> httpServerPromise = Promise.promise();
@@ -178,6 +178,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         return ar -> {
             if (ar.succeeded()) {
                 T res = ar.result();
+                logger.info("RESULT-->"+res);
                 if (res == null) {
                     notFound(context);
                 } else {
@@ -207,8 +208,8 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
     }
 
     /**
-     * This method generates handler for async methods in REST APIs.
-     * The result is not needed. Only the state of the async result is required.
+     * This method generates handler for jooq.async methods in REST APIs.
+     * The result is not needed. Only the state of the jooq.async result is required.
      *
      * @param context routing context instance
      * @param result  result content
@@ -246,7 +247,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
     //Methods for REST DELETE API calls
 
     /**
-     * This method generates handler for async methods in REST DELETE APIs.
+     * This method generates handler for jooq.async methods in REST DELETE APIs.
      * Return format in JSON (successful status = 204):
      * <code>
      * {"message": "delete_success"}

@@ -41,7 +41,7 @@ var AdministrationService = function(j_val) {
   /**
 
    @public
-   @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The async result indicates whether the operation was successful or not. 
+   @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The jooq.async result indicates whether the operation was successful or not. 
    @return {AdministrationService}
    */
   this.initializePersistence =  function(resultHandler) {
@@ -66,7 +66,7 @@ var AdministrationService = function(j_val) {
 
    @public
    @param user {Object} a User entity that we want to add 
-   @param resultHandler {function} the result handler will be called as soon as the User has been added. The async result indicates whether the operation was successful or not. 
+   @param resultHandler {function} the result handler will be called as soon as the User has been added. The jooq.async result indicates whether the operation was successful or not. 
    @return {AdministrationService}
    */
   this.addUser =  function(user, resultHandler) {
@@ -74,7 +74,7 @@ var AdministrationService = function(j_val) {
     if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
       j_administrationService["addUser(io.vertx.easyerp.microservice.administration.jpojo.User,io.vertx.core.Handler)"](__args[0]  != null ? new User(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
         if (ar.succeeded()) {
-          __args[1](null, null);
+          __args[1](ar.result(), null);
         } else {
           __args[1](null, ar.cause());
         }
@@ -98,7 +98,7 @@ var AdministrationService = function(j_val) {
     if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
       j_administrationService["retrieveUser(java.lang.String,io.vertx.core.Handler)"](__args[0], function(ar) {
         if (ar.succeeded()) {
-          __args[1](utils.convReturnDataObject(ar.result()), null);
+          __args[1](utils.convReturnJson(ar.result()), null);
         } else {
           __args[1](null, ar.cause());
         }

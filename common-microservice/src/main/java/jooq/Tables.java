@@ -23,7 +23,7 @@ import jooq.tables.TbUser;
 public class Tables {
 
     /**
-     * This table contains user login credentials and assigned user role
+     * The table <code>public.tb_user</code>.
      */
     public static final TbUser TB_USER = TbUser.TB_USER;
 }

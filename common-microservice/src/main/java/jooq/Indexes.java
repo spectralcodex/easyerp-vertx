@@ -32,7 +32,7 @@ public class Indexes {
 
     public static final Index TB_USER_EMAIL_KEY = Indexes0.TB_USER_EMAIL_KEY;
     public static final Index TB_USER_MOBILE_KEY = Indexes0.TB_USER_MOBILE_KEY;
-    public static final Index USER_PKEY = Indexes0.USER_PKEY;
+    public static final Index TB_USER_PKEY = Indexes0.TB_USER_PKEY;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -41,6 +41,6 @@ public class Indexes {
     private static class Indexes0 {
         public static Index TB_USER_EMAIL_KEY = Internal.createIndex("tb_user_email_key", TbUser.TB_USER, new OrderField[] { TbUser.TB_USER.EMAIL }, true);
         public static Index TB_USER_MOBILE_KEY = Internal.createIndex("tb_user_mobile_key", TbUser.TB_USER, new OrderField[] { TbUser.TB_USER.MOBILE }, true);
-        public static Index USER_PKEY = Internal.createIndex("user_pkey", TbUser.TB_USER, new OrderField[] { TbUser.TB_USER.ID }, true);
+        public static Index TB_USER_PKEY = Internal.createIndex("tb_user_pkey", TbUser.TB_USER, new OrderField[] { TbUser.TB_USER.ID }, true);
     }
 }

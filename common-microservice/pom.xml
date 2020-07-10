@@ -10,6 +10,8 @@
     </parent>
     <artifactId>common-microservice</artifactId>
     <dependencies>
+
+        <!--Authentication and Authorization-->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-auth-oauth2</artifactId>
@@ -17,14 +19,10 @@
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-jdbc-client</artifactId>
+            <artifactId>vertx-auth-jdbc</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-sql-common</artifactId>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -39,6 +37,11 @@
             <groupId>io.github.jklingsporn</groupId>
             <artifactId>vertx-jooq-classic-async</artifactId>
             <version>5.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
         </dependency>
 
     </dependencies>

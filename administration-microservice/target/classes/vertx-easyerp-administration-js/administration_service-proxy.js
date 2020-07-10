@@ -53,7 +53,7 @@
     /**
 
      @public
-     @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The async result indicates whether the operation was successful or not. 
+     @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The jooq.async result indicates whether the operation was successful or not. 
      @return {AdministrationService}
      */
     this.initializePersistence =  function(resultHandler) {
@@ -72,7 +72,7 @@
 
      @public
      @param user {Object} a User entity that we want to add 
-     @param resultHandler {function} the result handler will be called as soon as the User has been added. The async result indicates whether the operation was successful or not. 
+     @param resultHandler {function} the result handler will be called as soon as the User has been added. The jooq.async result indicates whether the operation was successful or not. 
      @return {AdministrationService}
      */
     this.addUser =  function(user, resultHandler) {

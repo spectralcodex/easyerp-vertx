@@ -5,6 +5,7 @@ import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
+import io.vertx.core.json.JsonObject;
 import io.vertx.easyerp.microservice.administration.jpojo.User;
 
 /**
@@ -17,7 +18,7 @@ import io.vertx.easyerp.microservice.administration.jpojo.User;
  */
 @VertxGen
 @ProxyGen
-public interface AdministrationService {
+public interface AdministrationService{
     /**
      * The name of the event bus service.
      */
@@ -33,7 +34,7 @@ public interface AdministrationService {
 
     /**
      * @param resultHandler the result handler will be called as soon as the initialization has been accomplished.
-     *                      The async result indicates whether the operation was successful or not.
+     *                      The jooq.async result indicates whether the operation was successful or not.
      *
      *
      */
@@ -45,13 +46,18 @@ public interface AdministrationService {
      * Add a User to the persistence.
      *
      * @param user       a  User entity that we want to add
-     * @param resultHandler the result handler will be called as soon as the User has been added. The async result
+     * @param resultHandler the result handler will be called as soon as the User has been added. The jooq.async result
      *                      indicates whether the operation was successful or not.
      */
     @Fluent
-    AdministrationService addUser(User user, Handler<AsyncResult<Void>> resultHandler);
+    AdministrationService addUser(User user, Handler<AsyncResult<Integer>> resultHandler);
+
+   // @Fluent
+    //AdministrationService retrieveUser(String userId, Handler<AsyncResult<User>> resultHandler);
 
     @Fluent
-    AdministrationService retrieveUser(String userId, Handler<AsyncResult<User>> resultHandler);
+    AdministrationService retrieveUser(String userId, Handler<AsyncResult<JsonObject>> resultHandler);
+
+
 
 }

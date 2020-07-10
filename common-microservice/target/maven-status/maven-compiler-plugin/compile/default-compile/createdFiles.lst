@@ -1,15 +1,15 @@
 jooq/Keys$Identities0.class
+io/vertx/easyerp/microservice/common/config/AuthProviderHelper.class
 jooq/Public.class
 io/vertx/easyerp/microservice/common/service/JdbcRepositoryWrapper.class
 jooq/routines/Decremental.class
-io/vertx/easyerp/microservice/common/config/AsyncConnectionProvider.class
 jooq/routines/Square.class
 jooq/routines/HiLo.class
 jooq/tables/converters/Bindings.class
-jooq/routines/GetNow.class
 jooq/routines/SumAvg.class
 jooq/tables/records/TbUserRecord.class
 io/vertx/easyerp/microservice/common/service/JooqRepositoryWrapper.class
+jooq/routines/ShowUsers.class
 io/vertx/easyerp/microservice/common/package-info.class
 jooq/async/AsyncClassicQueryExecutor.class
 jooq/Indexes.class
@@ -25,6 +25,7 @@ jooq/Sequences.class
 jooq/tables/daos/TbUserDao.class
 jooq/tables/pojos/TbUser.class
 jooq/Tables.class
+jooq/routines/FnGetNow.class
 jooq/Keys.class
 jooq/Keys$UniqueKeys0.class
 io/vertx/easyerp/microservice/common/config/Log4jConfigurationServiceHandler.class

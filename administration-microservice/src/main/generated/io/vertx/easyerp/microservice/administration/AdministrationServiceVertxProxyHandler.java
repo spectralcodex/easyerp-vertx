@@ -41,6 +41,7 @@ import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.serviceproxy.HelperUtils;
 
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.easyerp.microservice.administration.AdministrationService;
@@ -126,17 +127,7 @@ public class AdministrationServiceVertxProxyHandler extends ProxyHandler {
         }
         case "retrieveUser": {
           service.retrieveUser((java.lang.String)json.getValue("userId"),
-                        res -> {
-                        if (res.failed()) {
-                          if (res.cause() instanceof ServiceException) {
-                            msg.reply(res.cause());
-                          } else {
-                            msg.reply(new ServiceException(-1, res.cause().getMessage()));
-                          }
-                        } else {
-                          msg.reply(res.result() == null ? null : res.result().toJson());
-                        }
-                     });
+                        HelperUtils.createHandler(msg));
           break;
         }
         default: throw new IllegalStateException("Invalid action: " + action);
