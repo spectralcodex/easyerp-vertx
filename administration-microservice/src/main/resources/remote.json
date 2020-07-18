@@ -1,0 +1,15 @@
+{
+  "api.name": "administration",
+  "administration.http.address": "0.0.0.0",
+  "administration.http.port": 8082,
+  "port": 5432,
+  "maxPoolSize": 1,
+  "username": "umuxvtt9ooatbo9g80cq",
+  "host": "bpsc4fdsfniwdp1nivtb-postgresql.services.clever-cloud.com",
+  "database": "bpsc4fdsfniwdp1nivtb",
+  "password": "USBuMIyH5V57peqGjoVW",
+  "charset": "UTF8",
+  "driver_class": "org.postgresql.Driver",
+  "jooq.dialect": "POSTGRES",
+  "uri": "postgresql://umuxvtt9ooatbo9g80cq:USBuMIyH5V57peqGjoVW@bpsc4fdsfniwdp1nivtb-postgresql.services.clever-cloud.com:5432/bpsc4fdsfniwdp1nivtb"
+}

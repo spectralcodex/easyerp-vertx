@@ -1,9 +1,12 @@
 io/vertx/easyerp/microservice/administration/impl/AdministrationImpl.class
 io/vertx/easyerp/microservice/administration/package-info.class
 io/vertx/easyerp/microservice/administration/AdministrationService.class
+io/vertx/easyerp/microservice/administration/util/PropertiesCache$1.class
 io/vertx/easyerp/microservice/administration/jpojo/UserConverter.class
 io/vertx/easyerp/microservice/administration/jpojo/User.class
+io/vertx/easyerp/microservice/administration/util/PropertiesCache.class
 io/vertx/easyerp/microservice/administration/AdministrationServiceVertxEBProxy.class
+io/vertx/easyerp/microservice/administration/util/PropertiesCache$LazyHolder.class
 vertx-easyerp-administration-js/administration_service-proxy.js
 io/vertx/easyerp/microservice/administration/api/AdministrationRestAPIVerticle.class
 vertx-easyerp-administration-js/administration_service.js

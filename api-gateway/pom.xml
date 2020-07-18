@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>administration-microservice</artifactId>
+    <artifactId>api-gateway</artifactId>
     <properties>
-        <main.verticle>io.vertx.easyerp.microservice.administration.AdministrationVerticle</main.verticle>
+        <main.verticle>io.vertx.easyerp.microservice.gateway.APIGatewayVerticle</main.verticle>
     </properties>
 
     <dependencies>
@@ -20,15 +20,15 @@
             <artifactId>microservice-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.vertx.easyerp</groupId>
+            <artifactId>administration-microservice</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${pgsql.driver.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-auth-jdbc</artifactId>
+            <artifactId>vertx-auth-oauth2</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>

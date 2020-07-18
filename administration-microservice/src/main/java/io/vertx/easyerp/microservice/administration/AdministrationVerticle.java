@@ -8,6 +8,7 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.easyerp.microservice.administration.api.AdministrationRestAPIVerticle;
 import io.vertx.easyerp.microservice.administration.impl.AdministrationImpl;
+import io.vertx.easyerp.microservice.administration.util.PropertiesCache;
 import io.vertx.easyerp.microservice.common.BaseMicroserviceVerticle;
 
 import static io.vertx.easyerp.microservice.common.config.ConfigRetrieverHelper.configurationRetriever;
@@ -18,7 +19,7 @@ import java.io.InputStream;
 
 public class AdministrationVerticle extends BaseMicroserviceVerticle {
     private static final long SCAN_PERIOD = 20000L;
-    private final static InputStream CONFIG_IN = AdministrationVerticle.class.getClassLoader().getResourceAsStream("config.json");
+    private final static InputStream CONFIG_IN = AdministrationVerticle.class.getClassLoader().getResourceAsStream(PropertiesCache.getInstance().getProperty("local.config.file"));
    // private static final String PATH = " /administration-microservice/conf/config.json ";
     private final static Logger logger = LoggerFactory.getLogger(AdministrationVerticle.class);
 

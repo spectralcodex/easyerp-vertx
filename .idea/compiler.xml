@@ -10,13 +10,21 @@
         <processor name="io.vertx.codegen.CodeGenProcessor" />
         <module name="administration-microservice" />
       </profile>
+      <profile name="Annotation profile for api-gateway" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="src/test/generated" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="codegen.output" value="$PROJECT_DIR$/api-gateway/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="api-gateway" />
+      </profile>
       <profile name="Annotation profile for vertx-easyerp-microservice" enabled="true">
         <sourceOutputDir name="src/main/generated" />
         <sourceTestOutputDir name="src/test/generated" />
         <outputRelativeToContentRoot value="true" />
-        <option name="codegen.output" value="$PROJECT_DIR$/common-microservice/src/main" />
+        <option name="codegen.output" value="$PROJECT_DIR$/microservice-common/src/main" />
         <processor name="io.vertx.codegen.CodeGenProcessor" />
-        <module name="common-microservice" />
+        <module name="microservice-common" />
       </profile>
     </annotationProcessing>
   </component>

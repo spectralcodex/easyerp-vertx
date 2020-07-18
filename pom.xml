@@ -11,14 +11,12 @@
 
     <modules>
         <!-- infrastructure components-->
-        <module>common-microservice</module>
-        <module>administration-microservice</module>
-        <!--<module>database-middleware</module>
-        <module>api-gateway</module>-->
+        <module>api-gateway</module>
+        <module>microservice-common</module>
 
         <!-- service components -->
+        <module>administration-microservice</module>
         <!--<module>account-microservice</module>
-        <module>product-microservice</module>
         <module>inventory-microservice</module>
         <module>store-microservice</module>
         <module>shopping-cart-microservice</module>
