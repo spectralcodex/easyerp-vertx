@@ -4,9 +4,10 @@
 package jooq;
 
 
-import javax.annotation.Generated;
 
 import jooq.tables.TbUser;
+
+import javax.annotation.Generated;
 
 
 /**

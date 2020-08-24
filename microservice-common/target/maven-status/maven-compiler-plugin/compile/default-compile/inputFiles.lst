@@ -5,6 +5,7 @@
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/Public.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/package-info.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/tables/converters/Converters.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/PropertiesCache.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/service/JooqRepositoryWrapper.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/routines/HiLo.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/Indexes.java
@@ -15,9 +16,11 @@
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/Sequences.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/async/AsyncClassicGenericQueryExecutor.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/AuthProviderHelper.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/Slf4jRequestLogger.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/Routines.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/tables/pojos/TbUser.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/routines/Incremental.java
+/Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/RequestLogHandler.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/ConfigRetrieverHelper.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/jooq/tables/daos/TbUserDao.java
 /Users/sfadarkwah/Documents/GitHub/Projects/Idea/vertx-easyerp-microservice/microservice-common/src/main/java/io/vertx/easyerp/microservice/common/config/Log4jConfigurationServiceHandler.java

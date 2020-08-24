@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class AdministrationImpl extends JooqRepositoryWrapper implements AdministrationService {
 
-    protected final static Logger logger = LoggerFactory.getLogger(AdministrationImpl.class);
+    //protected final static Logger logger = LoggerFactory.getLogger(AdministrationImpl.class);
     private AuthProviderHelper authProviderHelper;
 
     public AdministrationImpl(Vertx vertx, JsonObject config) {

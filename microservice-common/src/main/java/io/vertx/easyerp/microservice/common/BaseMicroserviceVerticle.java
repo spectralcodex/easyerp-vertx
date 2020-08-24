@@ -8,8 +8,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.impl.ConcurrentHashSet;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+
 import io.vertx.rxjava.servicediscovery.types.HttpEndpoint;
 import io.vertx.rxjava.servicediscovery.types.MessageSource;
 import io.vertx.servicediscovery.Record;
@@ -17,6 +16,8 @@ import io.vertx.servicediscovery.ServiceDiscovery;
 import io.vertx.servicediscovery.ServiceDiscoveryOptions;
 import io.vertx.servicediscovery.types.EventBusService;
 import io.vertx.servicediscovery.types.JDBCDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
     protected Future<Void> publishHttpEndpoint(String name, String host, int port) {
         Record record = HttpEndpoint.createRecord(name, host, port, "/",
                 new JsonObject().put("api.name", config().getString("api.name", "")));
+        //logger.info("API Name::::::::"+ config().getString("api.name"));
         return publish(record);
 
     }
@@ -172,5 +174,9 @@ public class BaseMicroserviceVerticle extends AbstractVerticle {
         }
     }
 
-
+    protected Future<List<Record>> getAllEndpoints() {
+        Promise<List<Record>> promise = Promise.promise();
+        discovery.getRecords(record -> record.getType().equals(HttpEndpoint.TYPE), promise);
+        return promise.future();
+    }
 }

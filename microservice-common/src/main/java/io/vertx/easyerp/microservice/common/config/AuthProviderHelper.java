@@ -3,11 +3,12 @@ package io.vertx.easyerp.microservice.common.config;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+
 import io.vertx.ext.auth.VertxContextPRNG;
 import io.vertx.ext.auth.jdbc.JDBCAuth;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AuthProviderHelper {
     private  final JDBCAuth auth;

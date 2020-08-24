@@ -4,26 +4,28 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
-//import io.vertx.core.http.CookieSameSite;
-//import io.vertx.core.http.CookieSameSite;
+import io.vertx.core.http.CookieSameSite;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+import io.vertx.easyerp.microservice.common.config.RequestLogHandler;
+import io.vertx.ext.auth.AuthProvider;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.CorsHandler;
-import io.vertx.ext.web.handler.SessionHandler;
+import io.vertx.ext.web.handler.*;
 import io.vertx.ext.web.sstore.ClusteredSessionStore;
 import io.vertx.ext.web.sstore.LocalSessionStore;
-import io.vertx.rxjava.ext.web.handler.CookieHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+//import io.vertx.core.http.CookieSameSite;
+//import io.vertx.core.http.CookieSameSite;
 
 
 public class RestAPIVerticle extends BaseMicroserviceVerticle {
@@ -41,6 +43,23 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
                 .requestHandler(router)
                 .listen(port, host, httpServerPromise);
         return httpServerPromise.future().map(r -> null);
+    }
+
+    protected Router enableRouteLoggingSupport(Router router){
+        Router route = router;
+        // set router options
+        route.route().handler(BodyHandler.create().setBodyLimit(10 * 1024 * 1024)); // 10MB max body size
+        route.route().handler(ResponseTimeHandler.create()); // add a response header: x-response-time: xyzms
+        route.route().handler(TimeoutHandler.create(500)); // request timeout in ms
+        route.route().failureHandler(ErrorHandler.create(false)); // no exception details
+
+        // use customized request logger
+        // there are three logger format: DEFAULT, SHORT, TINY, see Slf4jRequestLogger.java for details
+        // you can make it configurable, e.g. dev using DEFAULT, prod using TINY
+        LoggerFormat loggerFormat = LoggerFormat.DEFAULT;
+        route.route().handler(RequestLogHandler.create(loggerFormat));
+
+        return route;
     }
 
     /**
@@ -72,11 +91,12 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      *
      * @param router router instance
      */
-    protected void enableLocalSession(Router router) {
+    protected void enableLocalSession(Router router, AuthProvider authProvider) {
         //router.route().handler(CookieHandler.create()); //deprecated
         router.route().handler(SessionHandler.create(
                 LocalSessionStore.create(vertx, "erp.user.session"))
-                //.setCookieSameSite(CookieSameSite.STRICT)
+                .setAuthProvider(authProvider)
+                .setCookieSameSite(CookieSameSite.STRICT) //help prevent csrf
                 .setCookieSecureFlag(true));
     }
 
@@ -88,7 +108,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
     protected void enableClusteredSession(Router router) {
         //router.route().handler(CookieHandler.create()); deprecated
         router.route().handler(SessionHandler.create(ClusteredSessionStore.create(vertx))
-                //.setCookieSameSite(CookieSameSite.STRICT)
+                .setCookieSameSite(CookieSameSite.STRICT)
                 .setCookieSecureFlag(true));
     }
 
@@ -178,7 +198,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         return ar -> {
             if (ar.succeeded()) {
                 T res = ar.result();
-                logger.info("RESULT-->"+res);
+                logger.info("RESULT-->" + res);
                 if (res == null) {
                     notFound(context);
                 } else {

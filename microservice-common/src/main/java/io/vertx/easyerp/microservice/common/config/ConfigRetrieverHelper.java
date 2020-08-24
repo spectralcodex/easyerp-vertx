@@ -8,8 +8,9 @@ import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rx.Observable;
 
 import java.io.InputStream;
@@ -84,7 +85,7 @@ public enum ConfigRetrieverHelper {
 
     public ConfigRetrieverHelper withJsonStore(final InputStream in) throws Exception {
         final Map<?, ?> map = new ObjectMapper().readValue(in, Map.class);
-        logger.info("File found:::::" + map);
+        //logger.info("File found:::::" + map);
         ConfigStoreOptions jsonStore = new ConfigStoreOptions()
                 .setType("json")
                 .setConfig(JsonObject.mapFrom(map));
