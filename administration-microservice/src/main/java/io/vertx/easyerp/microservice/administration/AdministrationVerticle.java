@@ -53,7 +53,6 @@ public class AdministrationVerticle extends BaseMicroserviceVerticle {
             ///Perform some init db operations here
             return service;
         });
-
     }
 
     /**

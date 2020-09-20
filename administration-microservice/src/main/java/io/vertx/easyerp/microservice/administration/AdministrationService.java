@@ -29,22 +29,17 @@ public interface AdministrationService{
      */
     String SERVICE_ADDRESS = "service.administration";
 
-
     //User operations
-
     /**
      * @param resultHandler the result handler will be called as soon as the initialization has been accomplished.
      *                      The jooq.async result indicates whether the operation was successful or not.
-     *
-     *
      */
+
     @Fluent
     AdministrationService initializePersistence(Handler<AsyncResult<Void>> resultHandler);
 
-
     /**
      * Add a User to the persistence.
-     *
      * @param user       a  User entity that we want to add
      * @param resultHandler the result handler will be called as soon as the User has been added. The jooq.async result
      *                      indicates whether the operation was successful or not.
