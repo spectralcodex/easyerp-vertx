@@ -1,6 +1,20 @@
-version: "2"
+version: "3"
 services:
-    
+
+  pg_db:
+    image: postgres
+    container_name: pg_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    expose:
+      - "5432"
+    volumes:
+      - ./postgres.conf:/etc/postgresql/postgresql.conf
+      - ./data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
     container_name: elasticsearch
@@ -30,26 +44,39 @@ services:
     depends_on:
       - elasticsearch
 
-  vertx-docker:
-    image: start-node/vertx-docker
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.8.1
+    container_name: filebeat
+    user: root
+    volumes:
+      - /etc/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - elasticsearch
+      - kibana
+
+  administration-microservice:
+    image: ms-impala/administration-microservice
+    links:
+      - pg_db
+      - filebeat
+    depends_on:
+      - pg_db
+      - filebeat
+    expose:
+      - "8082"
+
+  api-gateway:
+    image: ms-impala/api-gateway
     ports:
-      - "8888:8888"
+      - 8787:8787
     environment:
       - JAVA_OPTS="-Xms128m -Xmx256m"
-   
+    links:
+      - administration-microservice
+      - filebeat
 
-  filebeat:
-        image: docker.elastic.co/beats/filebeat:7.8.1
-        container_name: filebeat
-        user: root
-        volumes:
-            - /etc/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-            - /var/lib/docker:/var/lib/docker:ro
-            - /var/run/docker.sock:/var/run/docker.sock
-        depends_on:
-            - elasticsearch
-            - kibana
-    
 volumes:
   esdata1:
     driver: local

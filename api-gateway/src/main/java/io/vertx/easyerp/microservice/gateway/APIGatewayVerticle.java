@@ -50,7 +50,7 @@ public class APIGatewayVerticle extends RestAPIVerticle {
         Router router = enableRouteLoggingSupport(Router.router(vertx));
 
         // version handler
-        router.get("/api/v").handler(this::apiVersion);
+        router.get("/v").handler(this::apiVersion);
 
         oauth2 = KeycloakAuth.create(vertx, OAuth2FlowType.AUTH_CODE, config());
 

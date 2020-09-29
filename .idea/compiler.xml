@@ -18,6 +18,14 @@
         <processor name="io.vertx.codegen.CodeGenProcessor" />
         <module name="api-gateway" />
       </profile>
+      <profile name="Annotation profile for property-management-microservice" enabled="true">
+        <sourceOutputDir name="src/main/generated" />
+        <sourceTestOutputDir name="src/test/generated" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="codegen.output" value="$PROJECT_DIR$/property-management-microservice/src/main" />
+        <processor name="io.vertx.codegen.CodeGenProcessor" />
+        <module name="property-management-microservice" />
+      </profile>
       <profile name="Annotation profile for vertx-easyerp-microservice" enabled="true">
         <sourceOutputDir name="src/main/generated" />
         <sourceTestOutputDir name="src/test/generated" />

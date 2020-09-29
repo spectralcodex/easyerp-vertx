@@ -22,9 +22,9 @@ docker-compose -f $DIR/docker-compose.yml stop
 
 # Start container cluster
 # First start persistence and auth container and wait for it
-docker-compose -f $DIR/docker-compose.yml up -d elasticsearch logstash kibana postgresql
+docker-compose -f $DIR/docker-compose.yml up -d pg_db elasticsearch filebeat kibana
 echo "Waiting for persistence init..."
 sleep 30
 
 # Start other containers
-docker-compose -f $DIR/docker-compose.yml up
+docker-compose -f $DIR/docker-compose.yml up -d

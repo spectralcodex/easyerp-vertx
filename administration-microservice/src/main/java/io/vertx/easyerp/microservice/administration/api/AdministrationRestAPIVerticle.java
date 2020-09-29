@@ -54,7 +54,6 @@ public class AdministrationRestAPIVerticle extends RestAPIVerticle {
     private void apiAddUser(RoutingContext context) {
         try {
             logger.info("{}", context.getBodyAsJson());
-
             User user = new User(context.getBodyAsJson());
             service.addUser(user, resultHandler(context, r -> {
                 String result = new JsonObject().put("message", "user_added").encodePrettily();
