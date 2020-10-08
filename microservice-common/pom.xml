@@ -31,12 +31,12 @@
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq</artifactId>
-            <version>3.12.3</version>
+            <version>3.13.4</version>
         </dependency>
         <dependency>
             <groupId>io.github.jklingsporn</groupId>
             <artifactId>vertx-jooq-classic-async</artifactId>
-            <version>5.1.0</version>
+            <version>5.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
