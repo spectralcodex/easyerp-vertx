@@ -1,0 +1,66 @@
+= Cheatsheets
+
+[[Accomodation]]
+== Accomodation
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[abbreviation]]`@abbreviation`|`String`|-
+|[[createdBy]]`@createdBy`|`String`|-
+|[[createdOn]]`@createdOn`|`String`|-
+|[[dormBedsPerRoom]]`@dormBedsPerRoom`|`String`|-
+|[[id]]`@id`|`Number (Long)`|-
+|[[name]]`@name`|`String`|-
+|[[serialNumber]]`@serialNumber`|`String`|-
+|[[totalAccommodation]]`@totalAccommodation`|`String`|-
+|[[units]]`@units`|`String`|-
+|===
+
+[[PropertyAmenity]]
+== PropertyAmenity
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[amenity]]`@amenity`|`String`|-
+|[[createdBy]]`@createdBy`|`String`|-
+|[[createdOn]]`@createdOn`|`String`|-
+|[[id]]`@id`|`Number (Long)`|-
+|[[serialNumber]]`@serialNumber`|`String`|-
+|[[status]]`@status`|`String`|-
+|===
+
+[[PropertyProfile]]
+== PropertyProfile
+
+
+[cols=">25%,25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[address1]]`@address1`|`String`|-
+|[[address2]]`@address2`|`String`|-
+|[[city]]`@city`|`String`|-
+|[[country]]`@country`|`String`|-
+|[[createdBy]]`@createdBy`|`String`|-
+|[[createdOn]]`@createdOn`|`String`|-
+|[[description]]`@description`|`String`|-
+|[[email]]`@email`|`String`|-
+|[[id]]`@id`|`Number (Long)`|-
+|[[image]]`@image`|`String`|-
+|[[locationCoordinate]]`@locationCoordinate`|`String`|-
+|[[name]]`@name`|`String`|-
+|[[ownerFirstName]]`@ownerFirstName`|`String`|-
+|[[ownerLastName]]`@ownerLastName`|`String`|-
+|[[phone]]`@phone`|`String`|-
+|[[postalCode]]`@postalCode`|`String`|-
+|[[serialNumber]]`@serialNumber`|`String`|-
+|[[type]]`@type`|`String`|-
+|[[website]]`@website`|`String`|-
+|===
+

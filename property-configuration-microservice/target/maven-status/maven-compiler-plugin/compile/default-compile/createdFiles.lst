@@ -1,0 +1,3 @@
+io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationVerticle.class
+io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationService.class
+io/vertx/easyerp/microservice/propertyconfiguration/impl/PropertyConfigurationImpl.class

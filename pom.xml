@@ -17,6 +17,7 @@
         <!-- service components -->
         <module>administration-microservice</module>
         <module>property-management-microservice</module>
+        <module>property-configuration-microservice</module>
         <!--<module>account-microservice</module>
         <module>inventory-microservice</module>
         <module>store-microservice</module>

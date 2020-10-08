@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>property-management-microservice</artifactId>
+    <artifactId>property-configuration-microservice</artifactId>
     <properties>
-        <main.verticle>io.vertx.easyerp.microservice.propertymanagement.PropertyManagementVerticle</main.verticle>
+        <main.verticle>io.vertx.easyerp.microservice.propertyconfiguration.PropertyConfigurationVerticle</main.verticle>
     </properties>
     <dependencies>
         <dependency>
@@ -40,4 +40,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

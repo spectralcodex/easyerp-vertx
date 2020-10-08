@@ -1,0 +1,11 @@
+{
+  "api.name": "administration",
+  "administration.http.address": "0.0.0.0",
+  "administration.http.port": 8082,
+  "host": "localhost",
+  "driver_class": "org.postgresql.Driver",
+  "username": "impala",
+  "password": "secr3t",
+  "max_pool_size": 30,
+  "database": "impala"
+}

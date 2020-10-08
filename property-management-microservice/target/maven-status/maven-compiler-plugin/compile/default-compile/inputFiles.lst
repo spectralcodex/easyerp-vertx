@@ -1,0 +1,7 @@
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/PropertyManagementVerticle.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/jpojo/PropertyProfile.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/package-info.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/PropertyManagementService.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/jpojo/Accomodation.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/jpojo/PropertyAmenity.java
+/home/leonidas/Projects/git_dev/easyerp-vertx/property-management-microservice/src/main/java/io/vertx/easyerp/microservice/propertymanagement/impl/PropertyManagementImpl.java
