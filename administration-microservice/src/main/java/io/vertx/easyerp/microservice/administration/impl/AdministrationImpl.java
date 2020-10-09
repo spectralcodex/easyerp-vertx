@@ -1,20 +1,17 @@
 package io.vertx.easyerp.microservice.administration.impl;
 
 import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
 import io.vertx.easyerp.microservice.administration.AdministrationService;
 import io.vertx.easyerp.microservice.administration.jpojo.User;
 import io.vertx.easyerp.microservice.common.config.AuthProviderHelper;
 import io.vertx.easyerp.microservice.common.service.JooqRepositoryWrapper;
 
-import static jooq.Tables.*;
-
 import java.util.UUID;
+
+import static jooq.Tables.TB_USER;
 
 
 public class AdministrationImpl extends JooqRepositoryWrapper implements AdministrationService {

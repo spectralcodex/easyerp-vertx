@@ -27,8 +27,6 @@ export default class PropertyManagementService {
 
   constructor (eb: any, address: string);
 
-  addProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
-
   createProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
   updateProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
@@ -37,19 +35,19 @@ export default class PropertyManagementService {
 
   deleteProfile(serial: string, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  retrieveAmenities(resultHandler: (err: any, result: Object) => any) : PropertyManagementService;
+  retrieveAmenities(resultHandler: (err: any, result: Array<Object>) => any) : PropertyManagementService;
 
-  addAmenity(amenity: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  createAmenity(amenity: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
   deleteAmenity(serial: string, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  addAccomodation(accomodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  createAccommodation(accommodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  updateAccomodation(accomodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  updateAccommodation(accommodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  retrieveAllAccomodations(resultHandler: (err: any, result: Array<Object>) => any) : PropertyManagementService;
+  retrieveAllAccommodations(resultHandler: (err: any, result: Array<Object>) => any) : PropertyManagementService;
 
-  retrieveAccomodation(serial: string, resultHandler: (err: any, result: Object) => any) : PropertyManagementService;
+  retrieveAccommodation(serial: string, resultHandler: (err: any, result: Object) => any) : PropertyManagementService;
 
-  deleteAccomodation(serial: string, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  deleteAccommodation(serial: string, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 }

@@ -5,9 +5,8 @@ import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile;
 
@@ -40,15 +39,6 @@ public interface PropertyManagementService {
      * @param resultHandler the result handler will be called as soon as the initialization has been accomplished.
      *                      The jooq.async result indicates whether the operation was successful or not.
      */
-
-    @Fluent
-    PropertyManagementService addProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler);
-
-    /**
-     * @param profile
-     * @param resultHandler
-     * @return
-     */
     @Fluent
     PropertyManagementService createProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler);
 
@@ -62,27 +52,27 @@ public interface PropertyManagementService {
     PropertyManagementService deleteProfile(String serial, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
-    PropertyManagementService retrieveAmenities(Handler<AsyncResult<JsonObject>> resultHandler);
+    PropertyManagementService retrieveAmenities(Handler<AsyncResult<List<JsonObject>>> resultHandler);
 
     @Fluent
-    PropertyManagementService addAmenity(PropertyAmenity amenity, Handler<AsyncResult<Integer>> resultHandler);
+    PropertyManagementService createAmenity(PropertyAmenity amenity, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
     PropertyManagementService deleteAmenity(String serial, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
-    PropertyManagementService addAccomodation(Accomodation accomodation, Handler<AsyncResult<Integer>> resultHandler);
+    PropertyManagementService createAccommodation(Accommodation accommodation, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
-    PropertyManagementService updateAccomodation(Accomodation accomodation, Handler<AsyncResult<Integer>> resultHandler);
+    PropertyManagementService updateAccommodation(Accommodation accommodation, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
-    PropertyManagementService retrieveAllAccomodations(Handler<AsyncResult<List<JsonObject>>> resultHandler);
+    PropertyManagementService retrieveAllAccommodations(Handler<AsyncResult<List<JsonObject>>> resultHandler);
 
     @Fluent
-    PropertyManagementService retrieveAccomodation(String serial, Handler<AsyncResult<JsonObject>> resultHandler);
+    PropertyManagementService retrieveAccommodation(String serial, Handler<AsyncResult<JsonObject>> resultHandler);
 
     @Fluent
-    PropertyManagementService deleteAccomodation(String serial, Handler<AsyncResult<Integer>> resultHandler);
+    PropertyManagementService deleteAccommodation(String serial, Handler<AsyncResult<Integer>> resultHandler);
 
 }

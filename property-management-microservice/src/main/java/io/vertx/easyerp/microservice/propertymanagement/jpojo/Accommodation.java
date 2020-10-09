@@ -6,18 +6,18 @@ import io.vertx.core.json.JsonObject;
 import java.util.Objects;
 
 @DataObject(generateConverter = true)
-public class Accomodation {
+public class Accommodation {
     private Long Id;
     private String serialNumber;
     private String name;
     private String abbreviation;
     private String units;
-    private String dormBedsPerRoom;
-    private String totalAccommodation;
+    private Integer dormBedsPerRoom;
+    private Integer totalAccommodation;
     private String createdOn;
     private String createdBy;
 
-    public Accomodation(JsonObject json) {
+    public Accommodation(JsonObject json) {
        // PropertyProfileConverter.fromJson(json, this);
     }
 
@@ -27,7 +27,7 @@ public class Accomodation {
         return json;
     }
 
-    public Accomodation(Accomodation other) {
+    public Accommodation(Accommodation other) {
         Id = other.Id;
         this.serialNumber = other.serialNumber;
         this.name = other.name;
@@ -43,7 +43,7 @@ public class Accomodation {
         return Id;
     }
 
-    public Accomodation setId(Long id) {
+    public Accommodation setId(Long id) {
         Id = id;
         return this;
     }
@@ -52,7 +52,7 @@ public class Accomodation {
         return serialNumber;
     }
 
-    public Accomodation setSerialNumber(String serialNumber) {
+    public Accommodation setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
         return this;
     }
@@ -61,7 +61,7 @@ public class Accomodation {
         return name;
     }
 
-    public Accomodation setName(String name) {
+    public Accommodation setName(String name) {
         this.name = name;
         return this;
     }
@@ -70,7 +70,7 @@ public class Accomodation {
         return abbreviation;
     }
 
-    public Accomodation setAbbreviation(String abbreviation) {
+    public Accommodation setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
         return this;
     }
@@ -79,25 +79,25 @@ public class Accomodation {
         return units;
     }
 
-    public Accomodation setUnits(String units) {
+    public Accommodation setUnits(String units) {
         this.units = units;
         return this;
     }
 
-    public String getDormBedsPerRoom() {
+    public Integer getDormBedsPerRoom() {
         return dormBedsPerRoom;
     }
 
-    public Accomodation setDormBedsPerRoom(String dormBedsPerRoom) {
+    public Accommodation setDormBedsPerRoom(Integer dormBedsPerRoom) {
         this.dormBedsPerRoom = dormBedsPerRoom;
         return this;
     }
 
-    public String getTotalAccommodation() {
+    public Integer getTotalAccommodation() {
         return totalAccommodation;
     }
 
-    public Accomodation setTotalAccommodation(String totalAccommodation) {
+    public Accommodation setTotalAccommodation(Integer totalAccommodation) {
         this.totalAccommodation = totalAccommodation;
         return this;
     }
@@ -107,7 +107,7 @@ public class Accomodation {
         return createdOn;
     }
 
-    public Accomodation setCreatedOn(String createdOn) {
+    public Accommodation setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
         return this;
     }
@@ -116,7 +116,7 @@ public class Accomodation {
         return createdBy;
     }
 
-    public Accomodation setCreatedBy(String createdBy) {
+    public Accommodation setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -125,7 +125,7 @@ public class Accomodation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Accomodation that = (Accomodation) o;
+        Accommodation that = (Accommodation) o;
         return Objects.equals(Id, that.Id) &&
                 Objects.equals(serialNumber, that.serialNumber) &&
                 Objects.equals(name, that.name) &&

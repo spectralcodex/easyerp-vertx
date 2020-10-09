@@ -57,24 +57,6 @@
      @param resultHandler {function} the result handler will be called as soon as the initialization has been accomplished. The jooq.async result indicates whether the operation was successful or not. 
      @return {PropertyManagementService}
      */
-    this.addProfile =  function(profile, resultHandler) {
-      var __args = arguments;
-      if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
-        if (closed) {
-          throw new Error('Proxy is closed');
-        }
-        j_eb.send(j_address, {"profile":__args[0]}, {"action":"addProfile"}, function(err, result) { __args[1](err, result && result.body); });
-        return that;
-      } else throw new TypeError('function invoked with invalid arguments');
-    };
-
-    /**
-
-     @public
-     @param profile {Object} 
-     @param resultHandler {function} 
-     @return {PropertyManagementService} 
-     */
     this.createProfile =  function(profile, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
@@ -164,13 +146,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.addAmenity =  function(amenity, resultHandler) {
+    this.createAmenity =  function(amenity, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"amenity":__args[0]}, {"action":"addAmenity"}, function(err, result) { __args[1](err, result && result.body); });
+        j_eb.send(j_address, {"amenity":__args[0]}, {"action":"createAmenity"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -200,13 +182,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.addAccomodation =  function(accomodation, resultHandler) {
+    this.createAccommodation =  function(accomodation, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"accomodation":__args[0]}, {"action":"addAccomodation"}, function(err, result) { __args[1](err, result && result.body); });
+        j_eb.send(j_address, {"accomodation":__args[0]}, {"action":"createAccommodation"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -218,13 +200,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.updateAccomodation =  function(accomodation, resultHandler) {
+    this.updateAccommodation =  function(accomodation, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"accomodation":__args[0]}, {"action":"updateAccomodation"}, function(err, result) { __args[1](err, result && result.body); });
+        j_eb.send(j_address, {"accomodation":__args[0]}, {"action":"updateAccommodation"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -235,13 +217,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.retrieveAllAccomodations =  function(resultHandler) {
+    this.retrieveAllAccommodations =  function(resultHandler) {
       var __args = arguments;
       if (__args.length === 1 && typeof __args[0] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {}, {"action":"retrieveAllAccomodations"}, function(err, result) { __args[0](err, result && result.body); });
+        j_eb.send(j_address, {}, {"action":"retrieveAllAccommodations"}, function(err, result) { __args[0](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -253,13 +235,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.retrieveAccomodation =  function(serial, resultHandler) {
+    this.retrieveAccommodation =  function(serial, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"serial":__args[0]}, {"action":"retrieveAccomodation"}, function(err, result) { __args[1](err, result && result.body); });
+        j_eb.send(j_address, {"serial":__args[0]}, {"action":"retrieveAccommodation"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };
@@ -271,13 +253,13 @@
      @param resultHandler {function} 
      @return {PropertyManagementService}
      */
-    this.deleteAccomodation =  function(serial, resultHandler) {
+    this.deleteAccommodation =  function(serial, resultHandler) {
       var __args = arguments;
       if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
         if (closed) {
           throw new Error('Proxy is closed');
         }
-        j_eb.send(j_address, {"serial":__args[0]}, {"action":"deleteAccomodation"}, function(err, result) { __args[1](err, result && result.body); });
+        j_eb.send(j_address, {"serial":__args[0]}, {"action":"deleteAccommodation"}, function(err, result) { __args[1](err, result && result.body); });
         return that;
       } else throw new TypeError('function invoked with invalid arguments');
     };

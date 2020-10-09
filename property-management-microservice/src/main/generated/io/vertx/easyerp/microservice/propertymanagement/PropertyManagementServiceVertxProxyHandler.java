@@ -16,39 +16,15 @@
 
 package io.vertx.easyerp.microservice.propertymanagement;
 
-import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
 import io.vertx.core.Vertx;
-import io.vertx.core.Handler;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
-import io.vertx.core.eventbus.MessageConsumer;
-import io.vertx.core.eventbus.DeliveryOptions;
-import io.vertx.core.eventbus.ReplyException;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.json.JsonArray;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import io.vertx.serviceproxy.ServiceBinder;
 import io.vertx.serviceproxy.ProxyHandler;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.serviceproxy.HelperUtils;
 
-import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
-import java.util.List;
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation;
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity;
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile;
-import io.vertx.core.json.JsonObject;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
 /*
   Generated Proxy code - DO NOT EDIT
   @author Roger the Robot
@@ -119,11 +95,6 @@ public class PropertyManagementServiceVertxProxyHandler extends ProxyHandler {
       if (action == null) throw new IllegalStateException("action not specified");
       accessed();
       switch (action) {
-        case "addProfile": {
-          service.addProfile(json.getJsonObject("profile") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile(json.getJsonObject("profile")),
-                        HelperUtils.createHandler(msg));
-          break;
-        }
         case "createProfile": {
           service.createProfile(json.getJsonObject("profile") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile(json.getJsonObject("profile")),
                         HelperUtils.createHandler(msg));
@@ -145,11 +116,11 @@ public class PropertyManagementServiceVertxProxyHandler extends ProxyHandler {
           break;
         }
         case "retrieveAmenities": {
-          service.retrieveAmenities(HelperUtils.createHandler(msg));
+          service.retrieveAmenities(HelperUtils.createListHandler(msg));
           break;
         }
-        case "addAmenity": {
-          service.addAmenity(json.getJsonObject("amenity") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity(json.getJsonObject("amenity")),
+        case "createAmenity": {
+          service.createAmenity(json.getJsonObject("amenity") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity(json.getJsonObject("amenity")),
                         HelperUtils.createHandler(msg));
           break;
         }
@@ -158,27 +129,27 @@ public class PropertyManagementServiceVertxProxyHandler extends ProxyHandler {
                         HelperUtils.createHandler(msg));
           break;
         }
-        case "addAccomodation": {
-          service.addAccomodation(json.getJsonObject("accomodation") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation(json.getJsonObject("accomodation")),
+        case "createAccommodation": {
+          service.createAccommodation(json.getJsonObject("accomodation") == null ? null : new Accommodation(json.getJsonObject("accomodation")),
                         HelperUtils.createHandler(msg));
           break;
         }
-        case "updateAccomodation": {
-          service.updateAccomodation(json.getJsonObject("accomodation") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation(json.getJsonObject("accomodation")),
+        case "updateAccommodation": {
+          service.updateAccommodation(json.getJsonObject("accomodation") == null ? null : new Accommodation(json.getJsonObject("accomodation")),
                         HelperUtils.createHandler(msg));
           break;
         }
-        case "retrieveAllAccomodations": {
-          service.retrieveAllAccomodations(HelperUtils.createListHandler(msg));
+        case "retrieveAllAccommodations": {
+          service.retrieveAllAccommodations(HelperUtils.createListHandler(msg));
           break;
         }
-        case "retrieveAccomodation": {
-          service.retrieveAccomodation((java.lang.String)json.getValue("serial"),
+        case "retrieveAccommodation": {
+          service.retrieveAccommodation((java.lang.String)json.getValue("serial"),
                         HelperUtils.createHandler(msg));
           break;
         }
-        case "deleteAccomodation": {
-          service.deleteAccomodation((java.lang.String)json.getValue("serial"),
+        case "deleteAccommodation": {
+          service.deleteAccommodation((java.lang.String)json.getValue("serial"),
                         HelperUtils.createHandler(msg));
           break;
         }

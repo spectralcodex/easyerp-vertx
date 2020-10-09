@@ -21,24 +21,16 @@ import io.vertx.core.Vertx;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.json.JsonArray;
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.function.Function;
-import io.vertx.serviceproxy.ServiceProxyBuilder;
+
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.serviceproxy.ProxyUtils;
 
-import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
-import java.util.List;
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile;
-import io.vertx.core.json.JsonObject;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 /*
@@ -66,26 +58,6 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     } catch (IllegalStateException ex) {}
   }
 
-  @Override
-  public  PropertyManagementService addProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler){
-    if (closed) {
-      resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
-      return this;
-    }
-    JsonObject _json = new JsonObject();
-    _json.put("profile", profile == null ? null : profile.toJson());
-
-    DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "addProfile");
-    _vertx.eventBus().<Integer>request(_address, _json, _deliveryOptions, res -> {
-      if (res.failed()) {
-        resultHandler.handle(Future.failedFuture(res.cause()));
-      } else {
-        resultHandler.handle(Future.succeededFuture(res.result().body()));
-      }
-    });
-    return this;
-  }
   @Override
   public  PropertyManagementService createProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler){
     if (closed) {
@@ -167,7 +139,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService retrieveAmenities(Handler<AsyncResult<JsonObject>> resultHandler){
+  public  PropertyManagementService retrieveAmenities(Handler<AsyncResult<List<JsonObject>>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
@@ -176,17 +148,17 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
     _deliveryOptions.addHeader("action", "retrieveAmenities");
-    _vertx.eventBus().<JsonObject>request(_address, _json, _deliveryOptions, res -> {
+    _vertx.eventBus().<JsonArray>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
       } else {
-        resultHandler.handle(Future.succeededFuture(res.result().body()));
+        resultHandler.handle(Future.succeededFuture(ProxyUtils.convertList(res.result().body().getList())));
       }
     });
     return this;
   }
   @Override
-  public  PropertyManagementService addAmenity(PropertyAmenity amenity, Handler<AsyncResult<Integer>> resultHandler){
+  public  PropertyManagementService createAmenity(PropertyAmenity amenity, Handler<AsyncResult<Integer>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
@@ -195,7 +167,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     _json.put("amenity", amenity == null ? null : amenity.toJson());
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "addAmenity");
+    _deliveryOptions.addHeader("action", "createAmenity");
     _vertx.eventBus().<Integer>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
@@ -226,16 +198,16 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService addAccomodation(Accomodation accomodation, Handler<AsyncResult<Integer>> resultHandler){
+  public  PropertyManagementService createAccommodation(Accommodation accommodation, Handler<AsyncResult<Integer>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
     }
     JsonObject _json = new JsonObject();
-    _json.put("accomodation", accomodation == null ? null : accomodation.toJson());
+    _json.put("accomodation", accommodation == null ? null : accommodation.toJson());
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "addAccomodation");
+    _deliveryOptions.addHeader("action", "createAccommodation");
     _vertx.eventBus().<Integer>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
@@ -246,16 +218,16 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService updateAccomodation(Accomodation accomodation, Handler<AsyncResult<Integer>> resultHandler){
+  public  PropertyManagementService updateAccommodation(Accommodation accommodation, Handler<AsyncResult<Integer>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
     }
     JsonObject _json = new JsonObject();
-    _json.put("accomodation", accomodation == null ? null : accomodation.toJson());
+    _json.put("accomodation", accommodation == null ? null : accommodation.toJson());
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "updateAccomodation");
+    _deliveryOptions.addHeader("action", "updateAccommodation");
     _vertx.eventBus().<Integer>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
@@ -266,7 +238,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService retrieveAllAccomodations(Handler<AsyncResult<List<JsonObject>>> resultHandler){
+  public  PropertyManagementService retrieveAllAccommodations(Handler<AsyncResult<List<JsonObject>>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
@@ -274,7 +246,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     JsonObject _json = new JsonObject();
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "retrieveAllAccomodations");
+    _deliveryOptions.addHeader("action", "retrieveAllAccommodations");
     _vertx.eventBus().<JsonArray>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
@@ -285,7 +257,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService retrieveAccomodation(String serial, Handler<AsyncResult<JsonObject>> resultHandler){
+  public  PropertyManagementService retrieveAccommodation(String serial, Handler<AsyncResult<JsonObject>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
@@ -294,7 +266,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     _json.put("serial", serial);
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "retrieveAccomodation");
+    _deliveryOptions.addHeader("action", "retrieveAccommodation");
     _vertx.eventBus().<JsonObject>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));
@@ -305,7 +277,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     return this;
   }
   @Override
-  public  PropertyManagementService deleteAccomodation(String serial, Handler<AsyncResult<Integer>> resultHandler){
+  public  PropertyManagementService deleteAccommodation(String serial, Handler<AsyncResult<Integer>> resultHandler){
     if (closed) {
       resultHandler.handle(Future.failedFuture(new IllegalStateException("Proxy is closed")));
       return this;
@@ -314,7 +286,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
     _json.put("serial", serial);
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
-    _deliveryOptions.addHeader("action", "deleteAccomodation");
+    _deliveryOptions.addHeader("action", "deleteAccommodation");
     _vertx.eventBus().<Integer>request(_address, _json, _deliveryOptions, res -> {
       if (res.failed()) {
         resultHandler.handle(Future.failedFuture(res.cause()));

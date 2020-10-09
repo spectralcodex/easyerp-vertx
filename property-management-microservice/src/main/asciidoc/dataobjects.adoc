@@ -11,11 +11,11 @@
 |[[abbreviation]]`@abbreviation`|`String`|-
 |[[createdBy]]`@createdBy`|`String`|-
 |[[createdOn]]`@createdOn`|`String`|-
-|[[dormBedsPerRoom]]`@dormBedsPerRoom`|`String`|-
+|[[dormBedsPerRoom]]`@dormBedsPerRoom`|`Number (Integer)`|-
 |[[id]]`@id`|`Number (Long)`|-
 |[[name]]`@name`|`String`|-
 |[[serialNumber]]`@serialNumber`|`String`|-
-|[[totalAccommodation]]`@totalAccommodation`|`String`|-
+|[[totalAccommodation]]`@totalAccommodation`|`Number (Integer)`|-
 |[[units]]`@units`|`String`|-
 |===
 

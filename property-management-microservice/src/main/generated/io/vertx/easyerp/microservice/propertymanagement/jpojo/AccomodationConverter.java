@@ -1,17 +1,14 @@
 package io.vertx.easyerp.microservice.propertymanagement.jpojo;
 
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.json.JsonArray;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 
 /**
- * Converter for {@link io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation}.
- * NOTE: This class has been automatically generated from the {@link io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation} original class using Vert.x codegen.
+ * Converter for {@link Accommodation}.
+ * NOTE: This class has been automatically generated from the {@link Accommodation} original class using Vert.x codegen.
  */
 public class AccomodationConverter {
 
-  public static void fromJson(Iterable<java.util.Map.Entry<String, Object>> json, Accomodation obj) {
+  public static void fromJson(Iterable<java.util.Map.Entry<String, Object>> json, Accommodation obj) {
     for (java.util.Map.Entry<String, Object> member : json) {
       switch (member.getKey()) {
         case "abbreviation":
@@ -30,8 +27,8 @@ public class AccomodationConverter {
           }
           break;
         case "dormBedsPerRoom":
-          if (member.getValue() instanceof String) {
-            obj.setDormBedsPerRoom((String)member.getValue());
+          if (member.getValue() instanceof Number) {
+            obj.setDormBedsPerRoom(((Number)member.getValue()).intValue());
           }
           break;
         case "id":
@@ -50,8 +47,8 @@ public class AccomodationConverter {
           }
           break;
         case "totalAccommodation":
-          if (member.getValue() instanceof String) {
-            obj.setTotalAccommodation((String)member.getValue());
+          if (member.getValue() instanceof Number) {
+            obj.setTotalAccommodation(((Number)member.getValue()).intValue());
           }
           break;
         case "units":
@@ -63,11 +60,11 @@ public class AccomodationConverter {
     }
   }
 
-  public static void toJson(Accomodation obj, JsonObject json) {
+  public static void toJson(Accommodation obj, JsonObject json) {
     toJson(obj, json.getMap());
   }
 
-  public static void toJson(Accomodation obj, java.util.Map<String, Object> json) {
+  public static void toJson(Accommodation obj, java.util.Map<String, Object> json) {
     if (obj.getAbbreviation() != null) {
       json.put("abbreviation", obj.getAbbreviation());
     }
