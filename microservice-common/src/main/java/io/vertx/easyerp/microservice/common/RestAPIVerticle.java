@@ -154,6 +154,18 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         };
     }
 
+    protected <T> Handler<AsyncResult<T>> resultHandler(RoutingContext context, int status) {
+        return ar -> {
+            if (ar.succeeded()) {
+                T res = ar.result();
+                context.response()
+                        .setStatusCode(status == 0 ? 200 : status)
+                        .putHeader("Content-type", "application/json")
+                        .end(res == null ? "{}" : new JsonObject().put("msg", res.toString()).encodePrettily());
+            }
+        };
+    }
+
     protected <T> Handler<AsyncResult<T>> resultHandler(RoutingContext context, Function<T, String> converter) {
         return ar -> {
             if (ar.succeeded()) {
@@ -227,6 +239,7 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         };
     }
 
+
     /**
      * This method generates handler for jooq.async methods in REST APIs.
      * The result is not needed. Only the state of the jooq.async result is required.
@@ -249,6 +262,8 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
             }
         };
     }
+
+
 
     protected Handler<AsyncResult<Void>> resultVoidHandler(RoutingContext context, int status) {
         return ar -> {
@@ -276,7 +291,8 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
      * @param context routing context instance
      * @return generated handler
      */
-    protected Handler<AsyncResult<Void>> deleteResultHandler(RoutingContext context) {
+
+    protected<T> Handler<AsyncResult<T>> deleteResultHandler(RoutingContext context) {
         return res -> {
             if (res.succeeded()) {
                 context.response().setStatusCode(204)
@@ -288,6 +304,8 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
             }
         };
     }
+
+
 
     // helper method dealing with failure
 

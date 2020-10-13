@@ -59,9 +59,4 @@ public class JooqRepositoryWrapper {
         this.nonShared.getConnection(promise);
         return promise.future();
     }
-
-    protected AsyncClassicGenericQueryExecutor queryExecutor(){
-        return this.executor;
-    }
-
 }

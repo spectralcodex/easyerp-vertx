@@ -3,7 +3,11 @@ package io.vertx.easyerp.microservice.propertymanagement.api;
 import io.vertx.core.Promise;
 import io.vertx.easyerp.microservice.common.RestAPIVerticle;
 import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,12 +46,16 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         final Router router = enableRouteLoggingSupport(Router.router(vertx));
 
         // api route handler
-        /*router.post(API_ADD).handler(this::apiAddUser);
+        /*
+        router.post(API_ADD).handler(this::apiAddUser);
         router.get(API_RETRIEVE).handler(this::apiRetrieveUser);
         router.get(API_RETRIEVE_ALL).handler(this::apiRetrieveAll);
         router.patch(API_UPDATE).handler(this::apiUpdateUser);
         router.delete(API_DELETE).handler(this::apiDeleteUser);
-*/
+        */
+
+        router.post(API_PROFILE_ADD).handler(this::addPropProfile);
+
         String host = config().getString("property.http.address", "0.0.0.0");
         int port = config().getInteger("property.http.port", 8085);
 
@@ -55,4 +63,66 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
                 .compose(serverCreated -> publishHttpEndpoint(SERVICE_NAME, host, port))
                 .onComplete(startPromise);
     }
+
+    private void addPropProfile(RoutingContext context){
+        PropertyProfile profile = new PropertyProfile(context.getBodyAsJson());
+        service.createProfile(profile, resultHandler(context, 201));
+    }
+
+    private void editPropProfile(RoutingContext context){
+        notImplemented(context);
+    }
+
+    private void fetcPropProfile(RoutingContext context){
+        String id = context.request().getParam("id");
+        service.retrieveProfile(id, resultHandlerNonEmpty(context));
+    }
+
+    private void deletePropProfile(RoutingContext context){
+        String serialNo = context.request().getParam("Id");
+        service.deleteProfile(serialNo, deleteResultHandler(context));
+    }
+
+    private void addPropAmenity(RoutingContext context){
+        PropertyAmenity propertyAmenity = new PropertyAmenity((context.getBodyAsJson()));
+        service.createAmenity(propertyAmenity, resultHandler(context, 201));
+    }
+
+    private void editPropAmenity(RoutingContext context){
+        notImplemented(context);
+    }
+
+    private void fetchPropAmenities(RoutingContext context){
+        service.retrieveAmenities(resultHandlerNonEmpty(context));
+    }
+
+
+    private void deletePropAmenity(RoutingContext context){
+        String serialNo = context.request().getParam("Id");
+        service.deleteAmenity(serialNo, deleteResultHandler(context));
+    }
+
+    private void addAccommodation(RoutingContext context){
+        Accommodation accommodation = new Accommodation(context.getBodyAsJson());
+        service.createAccommodation(accommodation, resultHandler(context, 201));
+    }
+
+
+    private void fetchAccommodations(RoutingContext context){
+        service.retrieveAllAccommodations(resultHandlerNonEmpty(context));
+    }
+
+    private void fetchAccommodation(RoutingContext context){
+        String id = context.request().getParam("id");
+        service.retrieveAccommodation(id , resultHandlerNonEmpty(context));
+    }
+
+
+    private void deleteAccommodation(RoutingContext context){
+        String serialNo = context.request().getParam("Id");
+        service.deleteAccommodation(serialNo, deleteResultHandler(context));
+    }
+
 }
+
+
