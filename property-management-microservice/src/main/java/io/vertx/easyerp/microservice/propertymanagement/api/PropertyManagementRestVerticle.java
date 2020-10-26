@@ -38,7 +38,6 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         this.service = service;
     }
 
-
     @Override
     public void start(Promise<Void> startPromise) throws Exception {
         super.start();
@@ -46,15 +45,21 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         final Router router = enableRouteLoggingSupport(Router.router(vertx));
 
         // api route handler
-        /*
-        router.post(API_ADD).handler(this::apiAddUser);
-        router.get(API_RETRIEVE).handler(this::apiRetrieveUser);
-        router.get(API_RETRIEVE_ALL).handler(this::apiRetrieveAll);
-        router.patch(API_UPDATE).handler(this::apiUpdateUser);
-        router.delete(API_DELETE).handler(this::apiDeleteUser);
-        */
 
         router.post(API_PROFILE_ADD).handler(this::addPropProfile);
+        router.get(API_PROFILE_RETRIEVE).handler(this::fetcPropProfile);
+        router.get(API_PROFILE_UPDATE).handler(this::editPropProfile);
+        router.get(API_PROFILE_DELETE).handler(this::deletePropProfile);
+
+        router.get(API_AMENITY_ADD).handler(this::addPropAmenity);
+        router.get(API_AMENITY_RETRIEVE_ALL).handler(this::fetchPropAmenities);
+        router.get(API_AMENITY_DELETE).handler(this::deletePropAmenity);
+
+        router.get(API_ACCOM_ADD).handler(this::addAccommodation);
+        router.get(API_ACCOM_RETRIEVE).handler(this::fetchAccommodation);
+        router.get(API_ACCOM_RETRIEVE_ALL).handler(this::fetchAccommodations);
+        router.get(API_ACCOM_UPDATE).handler(this::editPropAccommodation);
+        router.get(API_ACCOM_DELETE).handler(this::deleteAccommodation);
 
         String host = config().getString("property.http.address", "0.0.0.0");
         int port = config().getInteger("property.http.port", 8085);
@@ -79,7 +84,7 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
     }
 
     private void deletePropProfile(RoutingContext context){
-        String serialNo = context.request().getParam("Id");
+        String serialNo = context.request().getParam("id");
         service.deleteProfile(serialNo, deleteResultHandler(context));
     }
 
@@ -96,9 +101,8 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         service.retrieveAmenities(resultHandlerNonEmpty(context));
     }
 
-
     private void deletePropAmenity(RoutingContext context){
-        String serialNo = context.request().getParam("Id");
+        String serialNo = context.request().getParam("id");
         service.deleteAmenity(serialNo, deleteResultHandler(context));
     }
 
@@ -106,7 +110,6 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         Accommodation accommodation = new Accommodation(context.getBodyAsJson());
         service.createAccommodation(accommodation, resultHandler(context, 201));
     }
-
 
     private void fetchAccommodations(RoutingContext context){
         service.retrieveAllAccommodations(resultHandlerNonEmpty(context));
@@ -117,10 +120,13 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
         service.retrieveAccommodation(id , resultHandlerNonEmpty(context));
     }
 
-
     private void deleteAccommodation(RoutingContext context){
-        String serialNo = context.request().getParam("Id");
+        String serialNo = context.request().getParam("id");
         service.deleteAccommodation(serialNo, deleteResultHandler(context));
+    }
+
+    private void editPropAccommodation(RoutingContext context){
+        notImplemented(context);
     }
 
 }

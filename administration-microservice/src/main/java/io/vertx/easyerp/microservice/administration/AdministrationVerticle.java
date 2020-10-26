@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class AdministrationVerticle extends BaseMicroserviceVerticle {
     //private static final long SCAN_PERIOD = 20000L;
     //private final static InputStream CONFIG_IN = AdministrationVerticle.class.getClassLoader().getResourceAsStream(PropertiesCache.getInstance().getProperty("local.config.file"));
-    // private static final String PATH = " /administration-microservice/conf/local.json ";
+    //private static final String PATH = " /administration-microservice/conf/local.json ";
     private final static Logger logger = LoggerFactory.getLogger(AdministrationVerticle.class);
 
     @Override
