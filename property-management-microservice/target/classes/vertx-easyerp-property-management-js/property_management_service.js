@@ -20,9 +20,9 @@ var utils = require('vertx-js/util/utils');
 var io = Packages.io;
 var JsonObject = io.vertx.core.json.JsonObject;
 var JPropertyManagementService = Java.type('io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService');
-var Accomodation = Java.type('io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation');
 var PropertyAmenity = Java.type('io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity');
 var PropertyProfile = Java.type('io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile');
+var Accommodation = Java.type('io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation');
 
 /**
  A service interface managing Property.
@@ -219,14 +219,14 @@ var PropertyManagementService = function(j_val) {
   /**
 
    @public
-   @param accomodation {Object} 
+   @param accommodation {Object} 
    @param resultHandler {function} 
    @return {PropertyManagementService}
    */
-  this.createAccommodation =  function(accomodation, resultHandler) {
+  this.createAccommodation =  function(accommodation, resultHandler) {
     var __args = arguments;
     if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
-      j_propertyManagementService["createAccommodation(io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation,io.vertx.core.Handler)"](__args[0]  != null ? new Accomodation(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
+      j_propertyManagementService["createAccommodation(io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation,io.vertx.core.Handler)"](__args[0]  != null ? new Accommodation(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
         if (ar.succeeded()) {
           __args[1](ar.result(), null);
         } else {
@@ -243,14 +243,14 @@ var PropertyManagementService = function(j_val) {
   /**
 
    @public
-   @param accomodation {Object} 
+   @param accommodation {Object} 
    @param resultHandler {function} 
    @return {PropertyManagementService}
    */
-  this.updateAccommodation =  function(accomodation, resultHandler) {
+  this.updateAccommodation =  function(accommodation, resultHandler) {
     var __args = arguments;
     if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
-      j_propertyManagementService["updateAccommodation(io.vertx.easyerp.microservice.propertymanagement.jpojo.Accomodation,io.vertx.core.Handler)"](__args[0]  != null ? new Accomodation(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
+      j_propertyManagementService["updateAccommodation(io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation,io.vertx.core.Handler)"](__args[0]  != null ? new Accommodation(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
         if (ar.succeeded()) {
           __args[1](ar.result(), null);
         } else {

@@ -1,12 +1,15 @@
 package io.vertx.easyerp.microservice.propertymanagement.jpojo;
 
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.json.JsonArray;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Converter for {@link Accommodation}.
- * NOTE: This class has been automatically generated from the {@link Accommodation} original class using Vert.x codegen.
+ * Converter for {@link io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation}.
+ * NOTE: This class has been automatically generated from the {@link io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation} original class using Vert.x codegen.
  */
-public class AccomodationConverter {
+public class AccommodationConverter {
 
   public static void fromJson(Iterable<java.util.Map.Entry<String, Object>> json, Accommodation obj) {
     for (java.util.Map.Entry<String, Object> member : json) {

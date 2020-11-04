@@ -1,3 +1,3 @@
-/home/leonidas/Projects/git_dev/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationVerticle.java
-/home/leonidas/Projects/git_dev/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationService.java
-/home/leonidas/Projects/git_dev/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/impl/PropertyConfigurationImpl.java
+/home/vigilus/Project/github/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/impl/PropertyConfigurationImpl.java
+/home/vigilus/Project/github/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationVerticle.java
+/home/vigilus/Project/github/easyerp-vertx/property-configuration-microservice/src/main/java/io/vertx/easyerp/microservice/propertyconfiguration/PropertyConfigurationService.java

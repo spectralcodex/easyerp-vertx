@@ -21,16 +21,24 @@ import io.vertx.core.Vertx;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.json.JsonArray;
-
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.function.Function;
+import io.vertx.serviceproxy.ServiceProxyBuilder;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
 import io.vertx.serviceproxy.ProxyUtils;
 
+import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
+import java.util.List;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyAmenity;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile;
+import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 /*
@@ -204,7 +212,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
       return this;
     }
     JsonObject _json = new JsonObject();
-    _json.put("accomodation", accommodation == null ? null : accommodation.toJson());
+    _json.put("accommodation", accommodation == null ? null : accommodation.toJson());
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
     _deliveryOptions.addHeader("action", "createAccommodation");
@@ -224,7 +232,7 @@ public class PropertyManagementServiceVertxEBProxy implements PropertyManagement
       return this;
     }
     JsonObject _json = new JsonObject();
-    _json.put("accomodation", accommodation == null ? null : accommodation.toJson());
+    _json.put("accommodation", accommodation == null ? null : accommodation.toJson());
 
     DeliveryOptions _deliveryOptions = (_options != null) ? new DeliveryOptions(_options) : new DeliveryOptions();
     _deliveryOptions.addHeader("action", "updateAccommodation");

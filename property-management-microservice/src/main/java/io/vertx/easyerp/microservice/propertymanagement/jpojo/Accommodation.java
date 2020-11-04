@@ -18,12 +18,12 @@ public class Accommodation {
     private String createdBy;
 
     public Accommodation(JsonObject json) {
-        AccomodationConverter.fromJson(json, this);
+       // AccomodationConverter.fromJson(json, this);
     }
 
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
-        AccomodationConverter.toJson(this, json);
+        //AccomodationConverter.toJson(this, json);
         return json;
     }
 

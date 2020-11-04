@@ -41,9 +41,9 @@ export default class PropertyManagementService {
 
   deleteAmenity(serial: string, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  createAccommodation(accomodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  createAccommodation(accommodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
-  updateAccommodation(accomodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+  updateAccommodation(accommodation: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
   retrieveAllAccommodations(resultHandler: (err: any, result: Array<Object>) => any) : PropertyManagementService;
 
