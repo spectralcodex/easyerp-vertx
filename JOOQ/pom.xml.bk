@@ -1,0 +1,138 @@
+<project>
+ <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.cloudimpala</groupId>
+    <artifactId>cloudimpala.jooq</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+
+  <dependencies>
+     <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+      <version>3.11.9</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.jklingsporn</groupId>
+      <artifactId>vertx-jooq-classic-async</artifactId>
+      <version>5.0.1</version>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+ <!-- Specify the maven code generator plugin -->
+          <groupId>org.jooq</groupId>
+          <artifactId>jooq-codegen-maven</artifactId>
+          <version>3.11.9</version>
+
+          <!-- The plugin should hook into the generate goal -->
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>generate</goal>
+                  </goals>
+              </execution>
+          </executions>
+
+          <dependencies>
+              <dependency>
+                  <groupId>org.postgresql</groupId>
+            	  <artifactId>postgresql</artifactId>
+                  <version>42.2.12</version>
+              </dependency>
+              <dependency>
+                  <groupId>io.github.jklingsporn</groupId>
+                  <artifactId>vertx-jooq-generate</artifactId>
+                  <version>5.0.1</version>
+              </dependency>
+             <dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-core</artifactId>
+    <version>2.3.0.1</version>
+</dependency>
+<dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version>
+</dependency>
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-impl</artifactId>
+    <version>2.3.1</version>
+</dependency>
+<dependency>
+    <groupId>org.javassist</groupId>
+    <artifactId>javassist</artifactId>
+    <version>3.25.0-GA</version>
+</dependency>
+
+          </dependencies>
+
+          <!-- Specify the plugin configuration.
+               The configuration format is the same as for the standalone code generator -->
+          <configuration>
+              <!-- JDBC connection parameters -->
+              <jdbc>
+                  <driver>org.postgresql.Driver</driver>
+                  <url>jdbc:postgresql://localhost/impala</url>
+                  <user>cloudimpala</user>
+                  <password>impala</password>
+              </jdbc>
+
+              <!-- Generator parameters -->
+              <generator>
+                  <name>io.github.jklingsporn.vertx.jooq.generate.classic.ClassicAsyncVertxGenerator</name>
+                  <!-- use 'io.github.jklingsporn.vertx.jooq.generate.classic.ClassicAsyncGuiceVertxGenerator' to enable Guice DI -->
+                  <database>
+                      <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                      <includes>.*</includes>
+                      <inputSchema>public</inputSchema>
+                      <!--<outputSchema>public</outputSchema>-->
+                      <unsignedTypes>false</unsignedTypes>
+                      <forcedTypes>
+                          <!-- Convert tinyint to boolean -->
+                          <forcedType>
+                              <name>BOOLEAN</name>
+                              <types>(?i:TINYINT)</types>
+                          </forcedType>
+                          <!-- Convert varchar column with name 'someJsonObject' to a io.vertx.core.json.JsonObject-->
+                          <forcedType>
+                              <userType>io.vertx.core.json.JsonObject</userType>
+                              <converter>io.github.jklingsporn.vertx.jooq.shared.JsonObjectConverter</converter>
+                              <expression>someJsonObject</expression>
+                              <types>.*</types>
+                          </forcedType>
+                          <!-- Convert varchar column with name 'someJsonArray' to a io.vertx.core.json.JsonArray-->
+                          <forcedType>
+                              <userType>io.vertx.core.json.JsonArray</userType>
+                              <converter>io.github.jklingsporn.vertx.jooq.shared.JsonArrayConverter</converter>
+                              <expression>someJsonArray</expression>
+                              <types>.*</types>
+                          </forcedType>
+                      </forcedTypes>
+                  </database>
+                  <target>
+                      <!-- This is where jOOQ will put your files -->
+                       <packageName>jooq</packageName>
+                      <directory>postgresql</directory>
+                  </target>
+                  <generate>
+                      <interfaces>true</interfaces>
+                      <daos>true</daos>
+                      <fluentSetters>true</fluentSetters>
+                      <pojos>true</pojos>
+                  </generate>
+
+
+                  <strategy>
+                      <name>io.github.jklingsporn.vertx.jooq.generate.VertxGeneratorStrategy</name>
+                  </strategy>
+              </generator>
+
+          </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

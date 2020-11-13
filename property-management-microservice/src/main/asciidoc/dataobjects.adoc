@@ -59,6 +59,7 @@
 |[[ownerLastName]]`@ownerLastName`|`String`|-
 |[[phone]]`@phone`|`String`|-
 |[[postalCode]]`@postalCode`|`String`|-
+|[[profileCode]]`@profileCode`|`String`|-
 |[[serialNumber]]`@serialNumber`|`String`|-
 |[[type]]`@type`|`String`|-
 |[[website]]`@website`|`String`|-

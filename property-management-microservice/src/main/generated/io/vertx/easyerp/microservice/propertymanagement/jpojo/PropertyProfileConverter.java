@@ -94,6 +94,11 @@ public class PropertyProfileConverter {
             obj.setPostalCode((String)member.getValue());
           }
           break;
+        case "profileCode":
+          if (member.getValue() instanceof String) {
+            obj.setProfileCode((String)member.getValue());
+          }
+          break;
         case "serialNumber":
           if (member.getValue() instanceof String) {
             obj.setSerialNumber((String)member.getValue());
@@ -165,6 +170,9 @@ public class PropertyProfileConverter {
     }
     if (obj.getPostalCode() != null) {
       json.put("postalCode", obj.getPostalCode());
+    }
+    if (obj.getProfileCode() != null) {
+      json.put("profileCode", obj.getProfileCode());
     }
     if (obj.getSerialNumber() != null) {
       json.put("serialNumber", obj.getSerialNumber());

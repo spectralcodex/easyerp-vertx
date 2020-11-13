@@ -11,6 +11,7 @@ public class PropertyProfile {
     private String serialNumber;
     private String type;
     private String description;
+    private String profileCode;
     private String image;
     private String name;
     private String phone;
@@ -43,6 +44,7 @@ public class PropertyProfile {
         this.serialNumber = other.serialNumber;
         this.type = other.type;
         this.description = other.description;
+        this.profileCode = other.profileCode;
         this.image = other.image;
         this.name = other.name;
         this.phone = other.phone;
@@ -231,6 +233,15 @@ public class PropertyProfile {
         return this;
     }
 
+    public String getProfileCode() {
+        return profileCode;
+    }
+
+    public PropertyProfile setProfileCode(String profileCode) {
+        this.profileCode = profileCode;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -240,6 +251,7 @@ public class PropertyProfile {
                 Objects.equals(serialNumber, that.serialNumber) &&
                 Objects.equals(type, that.type) &&
                 Objects.equals(description, that.description) &&
+                Objects.equals(profileCode, that.profileCode) &&
                 Objects.equals(image, that.image) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(phone, that.phone) &&
@@ -259,6 +271,6 @@ public class PropertyProfile {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, serialNumber, type, description, image, name, phone, email, website, ownerFirstName, ownerLastName, country, address1, address2, city, postalCode, locationCoordinate, createdOn, createdBy);
+        return Objects.hash(Id, serialNumber, type, description, profileCode, image, name, phone, email, website, ownerFirstName, ownerLastName, country, address1, address2, city, postalCode, locationCoordinate, createdOn, createdBy);
     }
 }
