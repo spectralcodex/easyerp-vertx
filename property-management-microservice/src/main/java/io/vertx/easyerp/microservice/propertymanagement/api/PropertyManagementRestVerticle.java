@@ -1,6 +1,7 @@
 package io.vertx.easyerp.microservice.propertymanagement.api;
 
 import io.vertx.core.Promise;
+import io.vertx.core.json.DecodeException;
 import io.vertx.easyerp.microservice.common.RestAPIVerticle;
 import io.vertx.easyerp.microservice.propertymanagement.PropertyManagementService;
 import io.vertx.easyerp.microservice.propertymanagement.jpojo.Accommodation;
@@ -48,18 +49,18 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
 
         router.post(API_PROFILE_ADD).handler(this::addPropProfile);
         router.get(API_PROFILE_RETRIEVE).handler(this::fetcPropProfile);
-        router.get(API_PROFILE_UPDATE).handler(this::editPropProfile);
-        router.get(API_PROFILE_DELETE).handler(this::deletePropProfile);
+        router.post(API_PROFILE_UPDATE).handler(this::editPropProfile);
+        router.delete(API_PROFILE_DELETE).handler(this::deletePropProfile);
 
-        router.get(API_AMENITY_ADD).handler(this::addPropAmenity);
+        router.post(API_AMENITY_ADD).handler(this::addPropAmenity);
         router.get(API_AMENITY_RETRIEVE_ALL).handler(this::fetchPropAmenities);
-        router.get(API_AMENITY_DELETE).handler(this::deletePropAmenity);
+        router.delete(API_AMENITY_DELETE).handler(this::deletePropAmenity);
 
-        router.get(API_ACCOM_ADD).handler(this::addAccommodation);
+        router.post(API_ACCOM_ADD).handler(this::addAccommodation);
         router.get(API_ACCOM_RETRIEVE).handler(this::fetchAccommodation);
         router.get(API_ACCOM_RETRIEVE_ALL).handler(this::fetchAccommodations);
-        router.get(API_ACCOM_UPDATE).handler(this::editPropAccommodation);
-        router.get(API_ACCOM_DELETE).handler(this::deleteAccommodation);
+        router.post(API_ACCOM_UPDATE).handler(this::editPropAccommodation);
+        router.delete(API_ACCOM_DELETE).handler(this::deleteAccommodation);
 
         String host = config().getString("property.http.address", "0.0.0.0");
         int port = config().getInteger("property.http.port", 8085);
@@ -70,12 +71,28 @@ public class PropertyManagementRestVerticle extends RestAPIVerticle {
     }
 
     private void addPropProfile(RoutingContext context){
-        PropertyProfile profile = new PropertyProfile(context.getBodyAsJson());
-        service.createProfile(profile, resultHandler(context, 201));
+        try {
+            PropertyProfile profile = new PropertyProfile(context.getBodyAsJson());
+            service.initializeProfile(profile, resultHandler(context, 201));
+        } catch (DecodeException e){
+            badRequest(context, e);
+        }
     }
 
     private void editPropProfile(RoutingContext context){
-        notImplemented(context);
+        //notImplemented(context);
+        try {
+            String serialNo = context.request().getParam("id");
+            if (serialNo != null) {
+                PropertyProfile profile = new PropertyProfile(context.getBodyAsJson());
+                profile.setSerialNumber(serialNo);
+                service.updateProfile(profile, resultHandler(context, 0));
+            } else {
+                badRequest(context, "id missing");
+            }
+        } catch (DecodeException e){
+            badRequest(context, e);
+        }
     }
 
     private void fetcPropProfile(RoutingContext context){

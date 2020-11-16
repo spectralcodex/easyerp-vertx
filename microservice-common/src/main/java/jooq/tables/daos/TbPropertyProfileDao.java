@@ -181,6 +181,13 @@ public class TbPropertyProfileDao extends AbstractAsyncVertxDAO<TbPropertyProfil
         return findManyByCondition(TbPropertyProfile.TB_PROPERTY_PROFILE.PROFILECODE.in(values));
     }
 
+    /**
+     * Find a unique record that has <code>profileCode = value</code> asynchronously
+     */
+    public Future<jooq.tables.pojos.TbPropertyProfile> findOneByProfilecode(String value) {
+        return findOneByCondition(TbPropertyProfile.TB_PROPERTY_PROFILE.PROFILECODE.eq(value));
+    }
+
     @Override
     public AsyncClassicQueryExecutor<TbPropertyProfileRecord,jooq.tables.pojos.TbPropertyProfile,Long> queryExecutor(){
         return (AsyncClassicQueryExecutor<TbPropertyProfileRecord,jooq.tables.pojos.TbPropertyProfile,Long>) super.queryExecutor();

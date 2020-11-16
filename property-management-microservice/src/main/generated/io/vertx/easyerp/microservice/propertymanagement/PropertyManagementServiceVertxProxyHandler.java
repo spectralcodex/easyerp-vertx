@@ -124,6 +124,11 @@ public class PropertyManagementServiceVertxProxyHandler extends ProxyHandler {
                         HelperUtils.createHandler(msg));
           break;
         }
+        case "initializeProfile": {
+          service.initializeProfile(json.getJsonObject("profile") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile(json.getJsonObject("profile")),
+                        HelperUtils.createHandler(msg));
+          break;
+        }
         case "updateProfile": {
           service.updateProfile(json.getJsonObject("profile") == null ? null : new io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile(json.getJsonObject("profile")),
                         HelperUtils.createHandler(msg));

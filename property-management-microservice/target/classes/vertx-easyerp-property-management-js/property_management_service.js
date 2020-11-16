@@ -38,6 +38,7 @@ var PropertyManagementService = function(j_val) {
   var that = this;
 
   var __super_createProfile = this.createProfile;
+  var __super_initializeProfile = this.initializeProfile;
   var __super_updateProfile = this.updateProfile;
   var __super_retrieveProfile = this.retrieveProfile;
   var __super_deleteProfile = this.deleteProfile;
@@ -69,6 +70,30 @@ var PropertyManagementService = function(j_val) {
       return that;
     } else if (typeof __super_createProfile != 'undefined') {
       return __super_createProfile.apply(this, __args);
+    }
+    else throw new TypeError('function invoked with invalid arguments');
+  };
+
+  /**
+
+   @public
+   @param profile {Object} 
+   @param resultHandler {function} 
+   @return {PropertyManagementService}
+   */
+  this.initializeProfile =  function(profile, resultHandler) {
+    var __args = arguments;
+    if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
+      j_propertyManagementService["initializeProfile(io.vertx.easyerp.microservice.propertymanagement.jpojo.PropertyProfile,io.vertx.core.Handler)"](__args[0]  != null ? new PropertyProfile(new JsonObject(Java.asJSONCompatible(__args[0]))) : null, function(ar) {
+        if (ar.succeeded()) {
+          __args[1](ar.result(), null);
+        } else {
+          __args[1](null, ar.cause());
+        }
+      }) ;
+      return that;
+    } else if (typeof __super_initializeProfile != 'undefined') {
+      return __super_initializeProfile.apply(this, __args);
     }
     else throw new TypeError('function invoked with invalid arguments');
   };

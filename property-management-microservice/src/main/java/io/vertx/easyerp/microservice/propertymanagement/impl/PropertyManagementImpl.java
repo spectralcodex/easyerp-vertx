@@ -44,6 +44,18 @@ public class PropertyManagementImpl extends JooqRepositoryWrapper implements Pro
     }
 
     @Override
+    public PropertyManagementService initializeProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler) {
+        executor.execute(dsl -> dsl.insertInto(TB_PROPERTY_PROFILE, TB_PROPERTY_PROFILE.SERIALNUMBER,
+                TB_PROPERTY_PROFILE.TYPE,
+                TB_PROPERTY_PROFILE.NAME,
+                TB_PROPERTY_PROFILE.PROFILECODE,
+                TB_PROPERTY_PROFILE.CREATEDBY)
+                .values(UUID.randomUUID().toString(),  profile.getType(),profile.getName(), profile.getProfileCode(),
+                profile.getCreatedBy())).onComplete(resultHandler);
+        return this;
+    }
+
+    @Override
     public PropertyManagementService updateProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler) {
         executor.execute(dsl -> dsl.update(TB_PROPERTY_PROFILE).set(TB_PROPERTY_PROFILE.TYPE, profile.getType())
                 .set(TB_PROPERTY_PROFILE.DESCRIPTION, profile.getDescription())
@@ -60,7 +72,9 @@ public class PropertyManagementImpl extends JooqRepositoryWrapper implements Pro
                 .set(TB_PROPERTY_PROFILE.CITY, profile.getCity())
                 .set(TB_PROPERTY_PROFILE.POSTALCODE, profile.getPostalCode())
                 .set(TB_PROPERTY_PROFILE.LOCATIONCOORDINATE, profile.getLocationCoordinate())
-                .set(TB_PROPERTY_PROFILE.CREATEDBY, profile.getCreatedBy())).onComplete(resultHandler);
+                .set(TB_PROPERTY_PROFILE.CREATEDBY, profile.getCreatedBy())
+                .where(TB_PROPERTY_PROFILE.SERIALNUMBER.eq(profile.getSerialNumber())))
+                .onComplete(resultHandler);
         return this;
     }
 
@@ -79,9 +93,7 @@ public class PropertyManagementImpl extends JooqRepositoryWrapper implements Pro
     }
 
     /**Amenity
-
      **/
-
 
     @Override
     public PropertyManagementService createAmenity(PropertyAmenity amenity, Handler<AsyncResult<Integer>> resultHandler) {
@@ -130,6 +142,7 @@ public class PropertyManagementImpl extends JooqRepositoryWrapper implements Pro
         .set(TB_ACCOMODATION.DORMBEDSPERROOM, accommodation.getDormBedsPerRoom())
         .set(TB_ACCOMODATION.TOTALACCOMODATION, accommodation.getTotalAccommodation())
         .set(TB_ACCOMODATION.CREATEDBY, accommodation.getCreatedBy())
+                        .where(TB_ACCOMODATION.SERIALNUMBER.eq(accommodation.getSerialNumber()))
         ).onComplete(resultHandler);
         return this;
     }
@@ -150,7 +163,8 @@ public class PropertyManagementImpl extends JooqRepositoryWrapper implements Pro
 
     @Override
     public PropertyManagementService deleteAccommodation(String serial, Handler<AsyncResult<Integer>> resultHandler) {
-        executor.execute(dsl -> dsl.deleteFrom(TB_ACCOMODATION).where(TB_ACCOMODATION.SERIALNUMBER.eq(serial)))
+        executor.execute(dsl -> dsl.deleteFrom(TB_ACCOMODATION)
+                .where(TB_ACCOMODATION.SERIALNUMBER.eq(serial)))
                 .onComplete(resultHandler);
         return this;
     }

@@ -42,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TbPropertyProfile extends TableImpl<TbPropertyProfileRecord> {
 
-    private static final long serialVersionUID = -1196123188;
+    private static final long serialVersionUID = -2097687732;
 
     /**
      * The reference instance of <code>public.tb_property_profile</code>
@@ -155,7 +155,7 @@ public class TbPropertyProfile extends TableImpl<TbPropertyProfileRecord> {
     /**
      * The column <code>public.tb_property_profile.profileCode</code>.
      */
-    public final TableField<TbPropertyProfileRecord, String> PROFILECODE = createField("profileCode", org.jooq.impl.SQLDataType.VARCHAR(10), this, "");
+    public final TableField<TbPropertyProfileRecord, String> PROFILECODE = createField("profileCode", org.jooq.impl.SQLDataType.VARCHAR(10).nullable(false), this, "");
 
     /**
      * Create a <code>public.tb_property_profile</code> table reference
@@ -227,7 +227,7 @@ public class TbPropertyProfile extends TableImpl<TbPropertyProfileRecord> {
      */
     @Override
     public List<UniqueKey<TbPropertyProfileRecord>> getKeys() {
-        return Arrays.<UniqueKey<TbPropertyProfileRecord>>asList(Keys.TB_PROPERTY_PROFILE_PKEY);
+        return Arrays.<UniqueKey<TbPropertyProfileRecord>>asList(Keys.TB_PROPERTY_PROFILE_PKEY, Keys.TB_PROPERTY_PROFILE_PROFILECODE_KEY);
     }
 
     /**

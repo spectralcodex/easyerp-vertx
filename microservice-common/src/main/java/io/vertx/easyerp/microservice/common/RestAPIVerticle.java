@@ -150,20 +150,27 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
                 T res = ar.result();
                 context.response().putHeader("Content-type", "application/json")
                         .end(res == null ? "{}" : res.toString());
+            }else {
+                internalError(context, ar.cause());
+                ar.cause().printStackTrace();
             }
         };
     }
 
     protected <T> Handler<AsyncResult<T>> resultHandler(RoutingContext context, int status) {
-        return ar -> {
-            if (ar.succeeded()) {
-                T res = ar.result();
-                context.response()
-                        .setStatusCode(status == 0 ? 200 : status)
-                        .putHeader("Content-type", "application/json")
-                        .end(res == null ? "{}" : new JsonObject().put("msg", res.toString()).encodePrettily());
-            }
-        };
+            return ar -> {
+                if (ar.succeeded()) {
+                    T res = ar.result();
+                    context.response()
+                            .setStatusCode(status == 0 ? 200 : status)
+                            .putHeader("Content-type", "application/json")
+                            .end(res == null ? "{}" : new JsonObject().put("msg", res.toString()).encodePrettily());
+                } else {
+                    internalError(context, ar.cause());
+                    ar.cause().printStackTrace();
+                }
+            };
+
     }
 
     protected <T> Handler<AsyncResult<T>> resultHandler(RoutingContext context, Function<T, String> converter) {
@@ -178,7 +185,6 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
                             .end(converter.apply(res));
                 }
             } else {
-                //logger.error(ar.cause());
                 internalError(context, ar.cause());
                 ar.cause().printStackTrace();
 
@@ -351,6 +357,12 @@ public class RestAPIVerticle extends BaseMicroserviceVerticle {
         context.response().setStatusCode(400)
                 .putHeader("content-type", "application/json")
                 .end(new JsonObject().put("error", ex.getMessage()).encodePrettily());
+    }
+
+    protected void badRequest(RoutingContext context, String msg) {
+        context.response().setStatusCode(400)
+                .putHeader("content-type", "application/json")
+                .end(new JsonObject().put("error", msg).encodePrettily());
     }
 
     protected void notFound(RoutingContext context) {

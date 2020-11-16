@@ -50,6 +50,7 @@ public class Keys {
     public static final UniqueKey<TbAccomodationRecord> TB_ACCOMODATION_PKEY = UniqueKeys0.TB_ACCOMODATION_PKEY;
     public static final UniqueKey<TbPropertyAmenityRecord> TB_PROPERTY_AMENITY_PKEY = UniqueKeys0.TB_PROPERTY_AMENITY_PKEY;
     public static final UniqueKey<TbPropertyProfileRecord> TB_PROPERTY_PROFILE_PKEY = UniqueKeys0.TB_PROPERTY_PROFILE_PKEY;
+    public static final UniqueKey<TbPropertyProfileRecord> TB_PROPERTY_PROFILE_PROFILECODE_KEY = UniqueKeys0.TB_PROPERTY_PROFILE_PROFILECODE_KEY;
     public static final UniqueKey<TbUserRecord> TB_USER_PKEY = UniqueKeys0.TB_USER_PKEY;
 
     // -------------------------------------------------------------------------
@@ -72,6 +73,7 @@ public class Keys {
         public static final UniqueKey<TbAccomodationRecord> TB_ACCOMODATION_PKEY = Internal.createUniqueKey(TbAccomodation.TB_ACCOMODATION, "tb_accomodation_pkey", TbAccomodation.TB_ACCOMODATION.ID);
         public static final UniqueKey<TbPropertyAmenityRecord> TB_PROPERTY_AMENITY_PKEY = Internal.createUniqueKey(TbPropertyAmenity.TB_PROPERTY_AMENITY, "tb_property_amenity_pkey", TbPropertyAmenity.TB_PROPERTY_AMENITY.ID);
         public static final UniqueKey<TbPropertyProfileRecord> TB_PROPERTY_PROFILE_PKEY = Internal.createUniqueKey(TbPropertyProfile.TB_PROPERTY_PROFILE, "tb_property_profile_pkey", TbPropertyProfile.TB_PROPERTY_PROFILE.ID);
+        public static final UniqueKey<TbPropertyProfileRecord> TB_PROPERTY_PROFILE_PROFILECODE_KEY = Internal.createUniqueKey(TbPropertyProfile.TB_PROPERTY_PROFILE, "tb_property_profile_profileCode_key", TbPropertyProfile.TB_PROPERTY_PROFILE.PROFILECODE);
         public static final UniqueKey<TbUserRecord> TB_USER_PKEY = Internal.createUniqueKey(TbUser.TB_USER, "tb_user_pkey", TbUser.TB_USER.ID);
     }
 }

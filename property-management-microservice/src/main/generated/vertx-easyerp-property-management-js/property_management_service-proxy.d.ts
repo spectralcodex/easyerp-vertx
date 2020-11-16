@@ -29,6 +29,8 @@ export default class PropertyManagementService {
 
   createProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
+  initializeProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
+
   updateProfile(profile: any, resultHandler: (err: any, result: any) => any) : PropertyManagementService;
 
   retrieveProfile(serial: string, resultHandler: (err: any, result: Object) => any) : PropertyManagementService;

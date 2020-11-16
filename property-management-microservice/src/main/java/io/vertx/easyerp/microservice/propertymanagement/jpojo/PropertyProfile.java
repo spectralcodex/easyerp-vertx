@@ -273,4 +273,30 @@ public class PropertyProfile {
     public int hashCode() {
         return Objects.hash(Id, serialNumber, type, description, profileCode, image, name, phone, email, website, ownerFirstName, ownerLastName, country, address1, address2, city, postalCode, locationCoordinate, createdOn, createdBy);
     }
+
+    @Override
+    public String toString() {
+        return "PropertyProfile{" +
+                "Id=" + Id +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", profileCode='" + profileCode + '\'' +
+                ", image='" + image + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", website='" + website + '\'' +
+                ", ownerFirstName='" + ownerFirstName + '\'' +
+                ", ownerLastName='" + ownerLastName + '\'' +
+                ", country='" + country + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", locationCoordinate='" + locationCoordinate + '\'' +
+                ", createdOn='" + createdOn + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                '}';
+    }
 }

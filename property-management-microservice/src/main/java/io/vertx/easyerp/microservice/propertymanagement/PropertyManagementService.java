@@ -43,6 +43,9 @@ public interface PropertyManagementService {
     PropertyManagementService createProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
+    PropertyManagementService initializeProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler);
+
+    @Fluent
     PropertyManagementService updateProfile(PropertyProfile profile, Handler<AsyncResult<Integer>> resultHandler);
 
     @Fluent
